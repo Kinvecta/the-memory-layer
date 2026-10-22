@@ -1,0 +1,30 @@
+filters:
+  and:
+    - file.inFolder("wiki")
+    - file.ext == "md"
+views:
+  - type: table
+    name: Review queue
+    filters:
+      or:
+        - confidence == "low"
+        - agent_written == true
+    order:
+      - file.name
+      - type
+      - confidence
+      - last_reviewed
+      - agent_written
+    sort:
+      - property: last_reviewed
+        direction: ASC
+  - type: table
+    name: All pages by type
+    order:
+      - file.name
+      - type
+      - summary
+      - updated
+    sort:
+      - property: type
+        direction: ASC

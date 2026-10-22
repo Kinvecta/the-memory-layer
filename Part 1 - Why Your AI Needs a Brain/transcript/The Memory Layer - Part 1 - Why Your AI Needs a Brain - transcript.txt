@@ -1,0 +1,171 @@
+The Memory Layer - Part 1 - Why Your AI Needs a Brain — transcript
+
+[0:00] cover
+Alex: Welcome to The Memory Layer, a series on building a second brain your AI can recall from. I'm Alex.
+Josh: And I'm Josh. This is Part 1: why your AI needs a brain.
+Alex: Here's the whole series in one picture. A brain, made of a handful of linked notes.
+Josh: A question comes in. The AI reads the catalog first, opens two pages, and answers with citations.
+Alex: And that heartbeat line along the bottom? It pulses the brain on every beat. It stands for a scheduled job that keeps the brain healthy. We'll get to it later.
+Josh: One thing up front. Nothing here is tied to one product. The brain is just a folder of markdown files, so any AI tool that can read files can use it.
+
+[0:44] agenda
+Josh: So, by the end of this video, you'll be able to do four things.
+Alex: Explain why a model forgets, and where memory can live.
+Josh: Describe the LLM Wiki pattern: raw, wiki, index, log, and the schema.
+Alex: Walk a vault: the memory layers, the heartbeat, and the recall ladder.
+Josh: And point any AI at a brain, and get answers back with citations.
+Alex: The chapters bar shows where we're going. The two biggest pieces are the pattern and the lab, because the point is to see a brain work, not just admire one.
+
+[1:19] why
+Alex: Let's start with the problem. Ask an AI tool, "what did our team decide last week?"
+Josh: And it can't know.
+Alex: Right. For three reasons. First, every session starts empty. The context window is working memory. Close the chat, and it's gone.
+Josh: But a lot of tools have built-in memory now.
+Alex: They do, and it's useful. But second, built-in memory isn't yours. It lives inside one product. You can't read it, audit it, or take it with you.
+Josh: And third, knowledge is scattered. Guides, transcripts, and decisions sit in folders nobody re-reads... so the AI can't either.
+Alex: So today's question is this. How do we give any AI a memory we own, and can check?
+
+[2:05] forget
+Josh: Let's watch it happen. Session one. The context window fills up: the system prompt, the chat, documents, the decisions you made.
+Alex: Then the session ends, and the window is wiped. That reset isn't a bug. It's how every model works.
+Josh: Session two. Same model, same question: "what did we decide?"
+Alex: And it has nothing to go on. It can only guess, or say it doesn't know.
+Josh: Now look at the bottom box. A small set of files on disk: core dot MD, and index dot MD.
+Alex: At the start of the session, the harness loads them. Core facts land in the window... and the answer comes back, with a source.
+Josh: So wouldn't a bigger context window fix all this?
+Alex: No. A bigger window still empties when the session ends, and filling it costs tokens on every turn. The model forgets. The files don't.
+
+[3:01] brain
+Alex: Now a short detour into biology, because your own brain already solved this problem.
+Josh: Neuroscientists describe two learning systems that work together. They're called complementary learning systems.
+Alex: Step one, encode. New experiences land in the hippocampus first. It learns fast, from a single exposure... but those traces fade fast too.
+Josh: Step two, consolidate. During sleep, the hippocampus replays recent experiences to the neocortex.
+Alex: The cortex learns slowly, but what it learns lasts, and links to what it already knows. Notice the orange hippocampus dims, while the gold cortex stays lit.
+Josh: Step three, recall. A cue, like a question, lights a few cortex nodes, and a wave of activation spreads along the links, back through the hippocampus, and the memory comes out.
+Alex: So information moves both ways. Now map it to the vault. The hippocampus is working memory.
+Josh: Sleep replay is the scheduled heartbeat.
+Alex: The neocortex is the wiki pages.
+Josh: And recall by cue is a query with citations.
+Alex: One caveat. This is an analogy for teaching. It's not a claim that the software works like neurons.
+
+[4:20] homes
+Josh: So where can an AI's memory actually live? There are three homes, and none of them is wrong.
+Alex: First, built-in product memory. Zero setup, and good for personal preferences. But it lives inside one vendor's product, and you only partly see what it stored.
+Josh: Second, a vector database. Classic RAG. It scales to millions of documents.
+Alex: But the index is a copy of your data that people can't read, and it needs a pipeline.
+Josh: Third, the markdown brain. A folder of linked pages that people can read, review, and open in any tool.
+Alex: Its sweet spot is a person's or a team's high-signal knowledge. Roughly a hundred to ten thousand documents.
+Josh: And there's an update from May 2026. Teams are now asking models to answer in HTML, because it can show diagrams, tables, and tabs.
+Alex: True, but HTML costs two to three times the tokens, and AI recall works better on markdown. So the rule is simple. For anything people read, render HTML. For what the AI recalls, keep markdown.
+Josh: And later in the series, we add local search on top of the files, so you get the best of both.
+
+[5:38] wiki
+Alex: Here's the pattern the whole series builds on. Andrej Karpathy described it in April 2026, and people now call it the LLM Wiki.
+Josh: At the top, AGENTS dot MD. That's the schema. The operating manual that tells any AI how this vault works.
+Alex: Below it, the raw folder. It holds sources exactly as they arrived: guides, transcripts, clipped articles. The AI reads them, but never edits them.
+Josh: So every claim can be traced back.
+Alex: Then comes ingest. The AI reads a source once, and spreads what it teaches across the wiki folder: a source page, plus updates to the concept, entity, and decision pages it touches, all linked.
+Josh: And two small files do a lot of work. Index dot MD is the catalog the AI reads first, one line per page.
+Alex: And log dot MD is the record of every change. Read once, file everywhere.
+Josh: So it's not just summarizing documents.
+Alex: No. It maintains a linked set of pages. And updating an existing page beats creating a new one.
+
+[6:49] loop
+Josh: The pattern runs on three operations. Each one is written down as a skill, so any tool runs it the same way.
+Alex: Ingest. One source fans out to three to ten pages, plus the index and the log.
+Josh: Query. The AI reads the index, opens the two or three pages that fit, and answers with citations.
+Alex: And watch step three. When an answer took real work, it gets saved back as a page. The page count ticks from fifty-three to fifty-four.
+Josh: So next time, the same question is a single read.
+Alex: Exactly. That's why knowledge compounds.
+Josh: And lint is the health check. Broken links, orphan pages, stale claims, and contradictions, found and fixed.
+Alex: Contradictions get flagged, not silently overwritten. And because every claim points to a page, checking an answer is just a click.
+
+[7:44] demo
+Alex: Let's see it on a real vault. Four steps.
+Josh: Step one. Drop a new document into the inbox folder, and ask the AI: "ingest this."
+Alex: Step two. Watch it spread. One new source page, several concept pages updated, and index and log both changed.
+Josh: Step three. Ask a question that needs two sources. "How do tokens relate to the recall ladder?" The answer cites pages from two different sessions.
+Alex: And step four. Review the change. Git diff shows every single edit.
+Josh: Nothing is hidden inside a model.
+
+[8:21] layers
+Josh: Now let's open the vault itself. There are four layers of memory.
+Alex: Core is a small file, under three hundred words, loaded every session. Who the brain serves, active projects, standing rules.
+Josh: Working is this session's scratchpad. Timestamped notes.
+Alex: When the session ends, working memory is archived into a dated episode file. That's episodic memory. What happened.
+Josh: And the semantic layer is the wiki. What's true. Reviewed, and cited.
+Alex: Watch the figure. The heartbeat promotes a decision from an episode up into a decision page, and one line into core.
+Josh: So what happened becomes what is true.
+Alex: And only the small top layers cost tokens every session.
+Josh: Should you just save everything, though?
+Alex: No. Over-capturing buries the signal. Record decisions, preferences, and observations. And never store secrets, or other people's personal data.
+
+[9:23] heartbeat
+Alex: So what is the heartbeat? It's a job that keeps the brain healthy, without anyone remembering to run it.
+Josh: The software version of sleep.
+Alex: Right. The ring of ticks orbiting the heart is the schedule, and the glowing gold tick is six fifteen in the morning.
+Josh: The heart beats four times, and each beat runs one step.
+Alex: Beat one, archive. This session's working notes move into a dated episode, so working memory starts clean.
+Josh: Beat two, re-index. Search is refreshed, and only changed files are re-processed.
+Alex: Beat three, lint. Broken links, orphans, and stale pages go into a health report.
+Josh: And beat four, reflect. That one's optional.
+Alex: An AI tool reads the report and recent episodes, promotes lasting facts into the wiki and core, and leaves anything that needs judgment for a person.
+Josh: So does the AI rewrite my notes overnight?
+Alex: No. It never edits raw sources, never deletes, and every change lands in the log and in git, so you can review it. We build and schedule it in Part 6.
+
+[10:33] ladder
+Josh: Next, the habit that makes a brain affordable. The recall ladder.
+Alex: Every rung costs more tokens than the one above it. Rung one, core, is already loaded.
+Josh: Rung two, the index. Scan the one-line summaries, open one to three pages. The first question in the figure stops right here.
+Alex: Most questions do. Rung three, search. Keyword and semantic search together, run locally. The second question needs it, and stops there.
+Josh: Rung four, follow the links and backlinks from the pages you opened.
+Alex: And rung five, the raw sources. Only to quote exact wording, or exact numbers. That's the biggest token bill.
+Josh: So the rule is: stop climbing when you have enough.
+
+[11:23] anywhere
+Alex: Here's the part I like most. One brain, any harness.
+Josh: The model is rented. The brain is yours.
+Alex: Because the brain is plain markdown plus a written manual, any tool that can read files can use it. A coding agent, a desktop chat app, a command-line agent, or a local model.
+Josh: Many tools read AGENTS dot MD directly. Others import it with one line from their own instruction file.
+Alex: And watch the last beat. Replace one model with another... and the new one connects to the same brain, and reads the same rules.
+Josh: Swap the model, keep the brain.
+
+[12:02] rule
+Josh: If you remember one thing from today, make it this.
+Alex: Memory lives in files, not in the model.
+Josh: Read the index first. Raw last.
+Alex: Every answer cites a page.
+Josh: Because if you can't open the page it came from...
+Alex: It isn't memory. It's a guess.
+
+[12:21] lab
+Alex: Now it's your turn. Pause the video and try this lab. Same three questions, with and without a brain.
+Josh: The questions are in the lab folder. One about the training program, one about a decision we made, and one that needs two sources.
+Alex: Part A, baseline. In any AI tool with no files attached, ask the three questions. It might answer the general one, but it can't know the decision, and it should say so.
+Josh: Part B, with the brain. Start the tool inside the brain-vault folder, so it reads AGENTS dot MD. Ask the same three, and open every citation it gives you.
+Alex: Part C, feed it. Drop the lab note into the inbox, ask it to ingest, then ask question three again, and read the new line in the log.
+Josh: And Part D, debrief. Which answers changed? Which citations held up? What did the index save you?
+Alex: One common snag. A tool started outside the vault folder never sees AGENTS dot MD.
+
+[13:25] check
+Josh: Let's check what stuck. Pause after each question and answer it out loud.
+Alex: One. Why doesn't a bigger context window give a model memory?
+Josh: Two. Name one strength, and one limit, of a vector database compared with a markdown brain.
+Alex: Three. What do raw, wiki, index, and log each hold?
+Josh: Four. What does the heartbeat do overnight, and what will it never touch?
+Alex: Five. A question can be answered from the index. Why not search raw anyway?
+Josh: And six. You switch to a different AI tool. What has to change in the brain?
+Alex: Spoiler for that last one. Nothing. The new tool reads the same manual.
+
+[14:11] bridge
+Alex: So that's Part 1. Why a model forgets, the LLM Wiki pattern that fixes it, and a real vault that any AI can read.
+Josh: Next time, Part 2 opens the most important file in that vault. AGENTS dot MD, the operating manual.
+Alex: We'll write one for your own brain, add page templates, and install the ingest, query, and lint skills, so every tool runs them the same way.
+Josh: Bring your copy of the reference vault, and your notes from the lab.
+
+[14:42] close
+Josh: One last look. This is the brain we built today.
+Alex: The guide, ten transcripts, and three research briefs, compiled into fifty-five linked pages. Watch the counter climb as each page lights up and links to its neighbors.
+Josh: And the pulses traveling the links? That's recall at work.
+Alex: The model is rented, and it forgets. The brain is yours. It lasts, and any AI can read it.
+Josh: Thanks for watching. See you in Part 2.

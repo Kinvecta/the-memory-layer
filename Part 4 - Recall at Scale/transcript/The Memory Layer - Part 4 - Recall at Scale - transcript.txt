@@ -1,0 +1,125 @@
+The Memory Layer - Part 4 - Recall at Scale — transcript
+
+[0:00] cover
+Alex: Welcome back to The Memory Layer. I'm Alex.
+Josh: And I'm Josh. This is Part 4: recall at scale.
+Alex: So far the AI finds pages by reading the index. Today the brain gets too big for that.
+Josh: Look at the figure. A lighthouse beam sweeps through the fog. Pages sit out there in the dark.
+Alex: The beam passes over them, and only one turns gold. That's search. It lights what matters.
+
+[0:29] agenda
+Josh: By the end of this video, you'll be able to do four things.
+Alex: Explain when the index stops being enough, and why loading everything fails.
+Josh: Compare keyword search with search by meaning, and know when each one wins.
+Alex: Run hybrid search, which fuses the two, over small chunks stamped with summaries and aliases.
+Josh: And measure recall with a small answer key, then fix a miss.
+
+[0:55] why
+Alex: Start with the problem. Think of a corner shop versus a warehouse.
+Josh: In a corner shop, you can scan every shelf. In a warehouse, you need a catalogue and a search.
+Alex: Watch the figure. The index card fills up as the brain grows. Fifty pages, a hundred, two hundred, five hundred.
+Josh: The read budget meter turns red and overflows. It's too long to read in one pass.
+Alex: Andrej Karpathy says the index file works surprisingly well at moderate scale: about a hundred sources and hundreds of pages. Past that, you want proper search.
+Josh: Now the chart below it. Accuracy against where the answer sits in a long input. It's shaped like a U. The middle gets lost.
+Alex: Then a search step pulls out just the three pages that matter. Past a few hundred pages, search. Don't read it all.
+
+[1:51] evidence
+Josh: Here's what the research says.
+Alex: In the Lost in the Middle study, with the answer buried in the middle of twenty documents, one model scored fifty-three point eight percent. That's lower than it scored with no documents at all.
+Josh: Chroma tested eighteen models. All eighteen got worse as the input grew.
+Alex: Anthropic added context to every chunk, combined meaning search with keyword search, and cut failed retrievals by forty-nine percent. Sixty-seven percent with a reranker.
+Josh: And Elastic found that fusing keyword and meaning rankings beat keyword alone by eighteen percent.
+Alex: So retrieve the few pages that matter. And combine words with meaning.
+
+[2:33] keyword
+Alex: First, keyword search. The standard method is called BM25.
+Josh: The analogy is the index at the back of a book. Look up an error code, and it sends you straight to page two hundred twelve.
+Alex: Watch the figure. The query is: ORA, zero-one-zero-one-seven, login error.
+Josh: Each word gets a weight. The error code is rare, so it counts most. The common word, error, is everywhere, so it counts little.
+Alex: Then each page's mentions tick up. More mentions help, but less and less. The fifth adds very little.
+Josh: The long meeting-notes page gets a length penalty, so it can't win just by having more words.
+Alex: The rows re-sort, and the page with the rare code jumps to number one. Rare words count most. Exact terms win.
+
+[3:27] meaning
+Josh: Second, search by meaning.
+Alex: The analogy is a librarian who knows meaning. Ask about fixing your car, and she brings the vehicle binder. But ask for part number forty-four seventy-one B, and she's shaky.
+Josh: Watch the figure. A page goes through an embedding model, running on your machine, and comes out as seven hundred sixty-eight numbers. Coordinates for its meaning.
+Alex: Then a question: how long is a session? It goes through the same model, and its gold point lands right next to the part-length page.
+Josh: The three nearest pages light up. And notice: the question and the page share no words. Keyword search finds nothing.
+Alex: The weak spots are exact codes, numbers, and negation, like the word not. That's why we don't pick one. We use both.
+
+[4:18] local
+Josh: Where does that meaning live? On your own machine.
+Alex: Brain-tools uses a small open model called nomic-embed-text, through Ollama. It's about a quarter of a gigabyte.
+Josh: Look at the galaxy. Similar words cluster together. A new word, puppy, lands next to dog, kitten and wolf.
+Alex: Your notes and their vectors stay in one local file. Nothing is sent to a cloud service.
+Josh: And if Ollama isn't running, search simply falls back to keywords.
+
+[4:49] hybrid
+Alex: Now combine them. This is hybrid search.
+Josh: The analogy is two judges. One judges wording, the other judges meaning. Their scores use different scales, so you can't just average them.
+Alex: Instead, each list gives a page one divided by sixty-plus-its-rank. Watch the formula appear in the middle.
+Josh: The fused list builds. db-login is second for keywords and first for meaning. It goes to the top.
+Alex: Pages that only one judge liked get one wire, and sit lower.
+Josh: Agreement rises. No score scaling needed.
+
+[5:26] chunk
+Alex: Search doesn't index whole pages. It indexes chunks.
+Josh: The analogy: recipe cards with good titles and nicknames. One dish per card, easy to find.
+Alex: Watch the note get cut at its headings into four cards. Each one is two hundred twenty words or fewer.
+Josh: Then a gold stamp lands on every card: the note's summary and its aliases. Its nicknames.
+Alex: A query arrives: search order. And the second card lights up. Found by its alias.
+
+[5:58] eval
+Josh: How do you know a change actually helped? You measure it.
+Alex: The analogy is a quiz with an answer key. You retake the same quiz after every change.
+Josh: This figure is a real run on the reference vault. Six questions, each with the page that should answer it. Each cell is the rank where that page came back.
+Alex: Exact terms, like cosign, come back first everywhere. Paraphrases differ. Why does it forget between chats? Fifth for keywords, second for meaning, third for hybrid.
+Josh: And crawl, walk, run, the team's nickname for the training path, is missed by all three.
+Alex: Two scores. Recall at five: was the right page in the top five? Five of six, in every mode.
+Josh: And MRR, the average of one over the rank. There, hybrid is highest, at zero point seven two.
+Alex: Now the fix. Add crawl, walk, run as an alias, re-index, and re-run. Row six becomes one, three, one. Six out of six, and hybrid jumps to zero point eight nine.
+
+[7:07] risks
+Alex: Three ways search fails quietly.
+Josh: One-sided. Hybrid can bury a page that only one judge finds. So when a question fails, check each mode.
+Alex: Stale. Search reads the index, not your notes. Run brain index after you edit.
+Josh: And switched. Vectors from two different models don't mix. Change the model, and re-index before you search.
+
+[7:32] demo
+Josh: Let's see it working.
+Alex: Step one: index the vault. Keywords first, in seconds. Then the vectors, with Ollama running.
+Josh: Step two: search for cosign in all three modes. All three put the right page first.
+Alex: Step three: a paraphrase. Why does the assistant forget everything between chats? Now the ranks differ.
+Josh: And step four: fix a miss. Add the alias crawl, walk, run, re-index, and run the quiz again.
+
+[8:04] rule
+Alex: If you remember one thing, make it this.
+Josh: Words for exact. Meaning for ideas.
+Alex: Fuse the ranks.
+Josh: Measure every change.
+Alex: And when search can't find a page, fix the page. Its summary and its aliases. Then retake the quiz.
+
+[8:24] lab
+Josh: Your turn. Pause the video and try this lab.
+Alex: Part A, index. Build the keyword index, then add vectors, and check the stats.
+Josh: Part B, score. Run the answer key in all three modes, and write down the ranks.
+Alex: Part C, explain. Pick a row where the modes disagree, and say why.
+Josh: Part D, fix. Add the alias crawl, walk, run, re-index, and score again.
+Alex: And Part E, extend. Add one real question of your own.
+
+[8:59] check
+Josh: Let's check what stuck. Pause after each question.
+Alex: One. Why isn't the index enough past a few hundred pages? Name one research result.
+Josh: Two. What three things does BM25 reward or penalize?
+Alex: Three. Give one query where keywords beat meaning, and one where meaning wins.
+Josh: Four. How does rank fusion merge two lists, and why use ranks instead of scores?
+Alex: Five. Why stamp each chunk with its note's summary and aliases?
+Josh: And six. What do recall at five and MRR tell you, and when do you re-run them?
+
+[9:41] bridge
+Alex: That's Part 4. Keyword search for exact terms, meaning search on your own machine, fused ranks, stamped chunks, and a quiz to prove it.
+Josh: Next time, Part 5: plug it in anywhere.
+Alex: Look at the figure. Three different apps plug into the same brain, and get the same three tools: search, read and remember.
+Josh: The editor agent searches for an error code, and the page comes back up the wire.
+Alex: One brain, any tool that speaks MCP. See you in Part 5.

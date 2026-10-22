@@ -1,0 +1,28 @@
+title: "[Brain] "
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for sharing what you built. Please don't post secrets, private notes or anyone's personal data.
+  - type: textarea
+    id: what
+    attributes:
+      label: What's in your brain?
+      description: Topics, number of sources and pages, personal or team.
+    validations:
+      required: true
+  - type: input
+    id: tools
+    attributes:
+      label: Which AI tools read it?
+      placeholder: e.g. a coding agent, a desktop chat app over MCP, a local model
+  - type: textarea
+    id: surprise
+    attributes:
+      label: One thing that surprised you
+  - type: textarea
+    id: screenshot
+    attributes:
+      label: Screenshot or link (optional)
+      description: Graph view, a cited answer, your heartbeat report.

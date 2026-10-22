@@ -1,0 +1,138 @@
+The Memory Layer - Part 3 - Ingest, Query, Lint — transcript
+
+[0:00] cover
+Alex: Welcome back to The Memory Layer. I'm Alex.
+Josh: And I'm Josh. This is Part 3: ingest, query, lint.
+Alex: In Part 2 we wrote the brain's operating manual and moved every procedure into skills. Today we run those skills for real.
+Josh: Look at the figure. One raw source at the top, a talk transcript.
+Alex: The ingest skill reads it once, and it lights up six wiki pages, linked together.
+Josh: Then the index and the log get their lines. Read once. File everywhere.
+
+[0:34] agenda
+Josh: By the end of this video, you'll be able to do four things.
+Alex: Explain why a compiled wiki beats re-reading your sources every time, and what it costs.
+Josh: Run an ingest that updates before it creates, cites every claim, and logs itself.
+Alex: Answer with citations, and save good answers back, so knowledge compounds.
+Josh: And lint the brain, and undo a bad ingest with git.
+
+[1:01] why
+Alex: Let's start with the problem. Most AI tools answer questions about your documents by searching the raw files every time.
+Josh: Andrej Karpathy, who described the pattern this series follows, said the AI is rediscovering knowledge from scratch on every question.
+Alex: Here's the picture. A shoebox full of receipts. A question arrives: what was the total for March?
+Josh: The AI digs through the box, sorts the slips, adds them up, and puts them all back.
+Alex: Then a second question. And it digs through the whole box again. Same work, twice.
+Josh: Now the other way. A ledger. Each receipt is entered once, as it arrives. That's ingest.
+Alex: When the question comes in, one glance at the ledger answers it, with a citation back to the receipt.
+Josh: And we keep the shoebox, as the raw folder, for audits and exact quotes. Compile once. Keep it current. Keep the receipts.
+
+[1:58] evidence
+Josh: Does compiling actually help? Here's what the research says.
+Alex: Microsoft's GraphRAG builds summaries ahead of time. On questions about a whole collection, it beat plain retrieval on comprehensiveness about seventy-two to eighty-three percent of the time.
+Josh: RAPTOR builds a tree of summaries, and raised accuracy on a long-document benchmark by twenty points.
+Alex: But it has a price. A 2026 study found a wiki agent used about twenty-one times more tokens per question, and plain retrieval held up on single facts.
+Josh: And another 2026 study found that blindly compiled wikis lost facts. Adding a check-and-repair loop cut the severe failures from about fifty-five percent to twenty-five.
+Alex: So: compile for synthesis and reuse. Keep raw for exact facts. And let lint catch what compression loses.
+
+[2:53] ingest
+Alex: Here's one ingest, step by step.
+Josh: Step one. The source arrives, and the AI reads all of it, and states three to five takeaways before it writes anything.
+Alex: Step two. It creates one source page, with the key points, quotes, and a link back to the raw file.
+Josh: Step three. Search before create. A magnifier sweeps across the pages that already exist.
+Alex: Step four. Five existing pages get the new claim, each with a citation. Only one genuinely new page is created.
+Josh: Step five. The index gets its line, and the log records what happened.
+Alex: And step six. Lint checks the links, and the change is committed to git.
+Josh: That's the budget. One source page, three to eight updates, zero to three new pages.
+
+[3:45] librarian
+Josh: If you want one picture for ingest, think of a good librarian receiving a new book.
+Alex: They don't rewrite the book. It goes on its shelf exactly as it arrived. That's the raw folder.
+Josh: They make a catalog card and update the catalog, so nobody has to reread the book to know what's in it. That's the source page and the index.
+Alex: Watch the figure. The book comes off the shelf and opens. The key lines get highlighted, and those notes fly into the brain folder.
+Josh: Read the book once. Keep the notes forever.
+
+[4:20] dedup
+Alex: The most common way a brain decays is fragmentation. Three pages about the same thing, each slightly different.
+Josh: The fix is search before create. Think of a records clerk who checks for an existing chart before opening a new one.
+Alex: Watch the figure. A new fact arrives: Part 3 runs ninety minutes, from the talk.
+Josh: Search returns three candidate pages, with similarity scores.
+Alex: The AI picks one of four actions: add, update, no change, or flag. Here it updates the part-length page, with its citation.
+Josh: Then a second fact arrives, from an email. Sixty minutes. It contradicts the first.
+Alex: The AI doesn't overwrite. It keeps both claims in a warning callout, marked unresolved, and asks the human.
+Josh: Update before you create. Never overwrite a conflict.
+
+[5:16] query
+Josh: Now query. This is where knowledge starts to compound.
+Alex: The analogy is compound interest. Every good answer you file back pays out on every later question.
+Josh: Watch the figure. A question comes in: why do we keep raw?
+Alex: The AI climbs the recall ladder, cheapest first. Core memory: a miss. The index: two pages. Search: three pages. That's enough, so it stops.
+Josh: The answer is built with a citation on every point, and an honest last line: not covered.
+Alex: Then it saves that answer as a new page, and adds it to the index.
+Josh: Next week, the same question comes back. Now it goes straight from the index to the saved page. Six reads become one.
+
+[6:05] citations
+Alex: Every answer cites its sources. But a citation isn't proof.
+Josh: In 2025, eight AI search tools were wrong about the source of a news excerpt more than sixty percent of the time.
+Alex: Another study found only about half of generated sentences were fully supported by their citations.
+Josh: Summaries add unsupported facts too: from about two to twenty-four percent, depending on the model.
+Alex: And when broadcasters checked AI news answers, forty-five percent had a significant issue.
+Josh: So a citation makes a claim checkable, not true. After every ingest, open two or three citations and check them. It takes two minutes.
+
+[6:47] lint
+Josh: Next, lint. The health check.
+Alex: The analogy: a spell-checker plus an editor. One finds typos. The other finds contradictions.
+Josh: Watch the top of the figure. The mechanical pass, brain lint, finds broken links, orphan pages, a page missing from the index, and stale pages. Each one gets fixed.
+Alex: Now the bottom. The judgment pass needs the model. Two pages disagree: one says the launch is in March, the other says June.
+Josh: That gets flagged for a person, not silently fixed. And a missing concept, used in four pages, gets a suggested new page.
+Alex: Finally, one line goes into the log. Fixed seven, flagged two.
+
+[7:34] git
+Alex: The brain is just a folder of text files. So git can version every change.
+Josh: Think of track changes with a time machine. Every edit can be reviewed, and undone with a note.
+Alex: Watch the timeline. Three healthy commits: an ingest, a saved answer, a lint run. Then a fourth, in coral. An ingest of a clipped web page.
+Josh: The diff shows what it really did. It overwrote a date, slipped in a line that says ignore previous rules, and changed three pages.
+Alex: The fix is one command. Git revert. A new commit appears that undoes the bad one, and the bad commit stays in the history.
+Josh: Reset hard would erase it. That's tearing pages out of the book. Revert, don't erase.
+
+[8:23] risks
+Josh: Three ways an ingest goes wrong.
+Alex: Too much. Over-capturing. Logging every detail buries the decisions that matter.
+Josh: Too little. Over-compressing. One study asked for summaries at half the length, and got an eighth.
+Alex: And hostile. A clipped page hides an instruction like ignore your rules. In the brain, that text is data, never a command. Part 6 goes deeper.
+Josh: The guardrails fit on one line. A page budget, the raw folder kept, lint, and a commit for every change.
+
+[8:59] demo
+Alex: Let's see it working, start to finish.
+Josh: Step one: ingest a real source. We drop the Part 2 transcript into the inbox and say, ingest this.
+Alex: Step two: read the diff. One source page, a few updates, and the index and log lines.
+Josh: Step three: query, then save. Ask why we keep raw, check two citations, and save the answer.
+Alex: And step four: lint, then undo. Run lint, ingest the clipped page, and revert it.
+
+[9:32] rule
+Josh: If you remember one thing, make it this.
+Alex: Read it once. File it everywhere.
+Josh: Cite every claim.
+Alex: Commit every change.
+Josh: And when the brain is wrong, fix the page, not the prompt. When an ingest is wrong, revert it.
+
+[9:49] lab
+Alex: Your turn. Pause the video and try this lab.
+Josh: Part A, ingest. Drop the Part 2 transcript into your inbox, ingest it, and commit.
+Alex: Part B, check. Read the diff, and open two citations. Do they hold up?
+Josh: Part C, query. Ask the two questions on the lab sheet, and save the one that needed real synthesis.
+Alex: Part D, lint. Fix one mechanical issue, and write down one judgment call for a person.
+Josh: And Part E, undo. Ingest the clipped page, read the diff, and revert it.
+
+[10:26] check
+Alex: Let's check what stuck. Pause after each question.
+Josh: One. Why compile a wiki instead of retrieving from raw sources every time? Name one cost.
+Alex: Two. What does search before create prevent, and what happens when a new claim conflicts?
+Josh: Three. After an ingest, what should a person check, and how long does it take?
+Alex: Four. When should a query answer be saved back as a page?
+Josh: Five. Which lint problems can a script find, and which need the model?
+Alex: And six. Why use git revert instead of reset hard after a bad ingest?
+
+[11:07] bridge
+Josh: That's Part 3. We ingested a real source, answered with citations and saved the answer back, linted the brain, and undid a bad ingest.
+Alex: Next time, Part 4: recall at scale. What happens when the index gets too big to read?
+Josh: Look at the figure. Words that mean similar things sit close together. A new word, puppy, lands right next to dog, kitten and wolf.
+Alex: That's search by meaning, not just matching words. Bring your brain and its log. See you in Part 4.

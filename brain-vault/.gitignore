@@ -1,0 +1,4 @@
+.brain/
+.obsidian/workspace*.json
+.DS_Store
+.trash/

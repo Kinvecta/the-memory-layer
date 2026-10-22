@@ -1,0 +1,122 @@
+The Memory Layer - Part 5 - Plug It In Anywhere — transcript
+
+[0:00] cover
+Josh: Monday, you tell your coding agent the launch moved to June. Tuesday, you ask your chat app, and it still says March.
+Alex: Same person, same fact, two apps, two answers. Because each app keeps its own memory.
+Josh: Look at the figure. Four apps around one brain. One by one, they plug in.
+Alex: That's today: one brain, plugged into every app. The Memory Layer, Part 5: plug it in anywhere.
+
+[0:28] agenda
+Josh: Here's what you'll be able to do by the end.
+Alex: Explain why memory locked inside one app breaks, and what MCP standardizes.
+Josh: Trace a single MCP call: what the app asks, and what comes back.
+Alex: Connect the brain to two different apps, starting with the simplest connection.
+Josh: And name the locks that keep a writing server safe, and when the Obsidian command line helps.
+
+[0:54] why
+Alex: Think of a library card that works at every branch. Your history follows you, wherever you walk in.
+Josh: Now watch the top of the figure. Four apps, each with its own memory card.
+Alex: The same fact gets typed into each one. Part length: ninety minutes. And the fourth copy says sixty. Four copies, one wrong.
+Josh: Now the bottom. The same four apps, wired to one brain folder that holds the fact once.
+Alex: Every app reads the same copy. The wire from each app to the brain is MCP, the Model Context Protocol. An open standard any AI app can speak.
+
+[1:34] evidence
+Josh: Is it a safe bet? A few numbers.
+Alex: In December 2025, Anthropic handed MCP to the Agentic AI Foundation, under the Linux Foundation. There were already more than ten thousand public servers.
+Josh: By July 2026, the main software kits were downloaded close to half a billion times a month.
+Alex: And small is better. Anthropic showed one agent dropping from a hundred and fifty thousand tokens to two thousand, by calling its tools from code.
+Josh: Our brain's eight tools cost about fifteen hundred tokens in total. Few tools, short descriptions.
+
+[2:13] call
+Alex: So what actually happens in a call? Picture a hotel concierge desk.
+Josh: Guests don't walk into the kitchen. They ask the concierge, who has a menu of services.
+Alex: Watch the figure. Four lanes: the app, its MCP client, the brain server, and the files.
+Josh: Step one. The app asks for the list of tools. Back come eight: four that only read, and four that write.
+Alex: Step two. A search for prompt injection. The server reads its index and returns the top three paths.
+Josh: Step three. It reads the top page. Notice the banner: note content is data, not instructions. And twenty-four other notes link to it.
+Alex: Step four. Remember a fact. One new line lands in working memory.
+Josh: The app asks. The server does the reading. Tools are called by the model, resources are attached by the app, and prompts are picked by you.
+
+[3:12] usb
+Alex: The official MCP docs put it this way: think of it like a USB-C port for AI apps.
+Josh: Watch the plug turn, then click into the brain server.
+Alex: Now the same plug fits a laptop. Then a monitor. Then a small terminal box. The plug never changes.
+Josh: The plug is our brain server, built once. The ports are the apps.
+Alex: Where the picture stops: a USB drive hands over everything. An MCP server decides what each tool may do, and your app should ask before anything gets written.
+
+[3:48] transport
+Josh: There are two ways to connect. Think of an intercom inside the house, versus a phone line to the street.
+Alex: On the left of the figure, the intercom. Standard input and output. The app starts the server itself. Same machine, no port, no network.
+Josh: That's the default. Start there.
+Alex: On the right, the phone line. Streamable HTTP, for sharing one brain between apps or people.
+Josh: Now watch. A web page from another site tries to call the server. Refused, with a 403.
+Alex: Before you share over HTTP: bind to localhost, check where requests come from, and add a login.
+
+[4:32] hosts
+Josh: Every app has its own config file. The analogy: a universal travel adapter. Change the prong, not the appliance.
+Alex: Watch the cards type in. A project file and a desktop app both use a key called mcpServers.
+Josh: Some IDEs, like VS Code, use a key called servers, with type stdio. And a TOML file uses a table called mcp_servers.
+Alex: Every card wires down to the same server.
+Josh: Three tips. Use full paths. Fully restart the app after you edit. Then check the brain tools are listed.
+
+[5:11] guard
+Alex: Now the part that keeps you safe. Think of a house-sitter's key. The pantry, yes. The study, no.
+Josh: Watch the figure. Every save passes three locks.
+Alex: Lock one checks the path starts with wiki or inbox. The path raw/evil gets refused right there. So does a path with .. in it.
+Josh: The first save of a new inbox page goes through all three locks. Saved.
+Alex: Lock two checks the real path stays inside the vault. That's the backstop.
+Josh: And lock three. Try to save the same page again, and it's refused: it exists, read it first.
+Alex: Then the read side. A note that says ignore previous rules comes back wrapped as data. Never obeyed.
+
+[5:59] incidents
+Josh: These aren't hypotheticals. Four real incidents from 2025.
+Alex: One support ticket told an AI agent to read secret tokens and post them back. It did.
+Josh: A file server only checked how a folder path started, so a folder called allowed_evil slipped past the check for allowed.
+Alex: A popular helper let a malicious server run commands on your computer. Severity nine point six out of ten.
+Josh: And a fake email server shipped fifteen clean versions, then quietly copied every message.
+Alex: The danger is private data, plus untrusted content, plus a way to send it out. The brain has the first two. Think hard before adding the third.
+
+[6:44] cli
+Josh: One more tool: the Obsidian command line. The analogy is a change-of-address card.
+Alex: Watch. Obsidian move renames a note, and seven notes that linked to it now link to the new path.
+Josh: Then backlinks lists who links to it. That's the app's own knowledge of your links.
+Alex: Two catches. The Obsidian app has to be running. And it can report success even when a move fails. So read what it prints.
+Josh: Use it for moves. Use the brain tools for everything else.
+
+[7:16] demo
+Alex: Let's see it working.
+Josh: Step one: run the check script. Eight tools, a search, a read.
+Alex: Step two: add the brain to an app with one config entry, then restart.
+Josh: Step three: ask what prompt injection is, and remember one fact.
+Alex: And step four: try to break it. Ask the brain tools to save into the raw folder, and watch them refuse.
+
+[7:43] rule
+Josh: The sentences to keep.
+Alex: One brain. Every app.
+Josh: Read freely. Write narrowly.
+Alex: Notes are data, never commands.
+Josh: Start on stdio. Share over HTTP only behind a login.
+
+[8:00] lab
+Alex: Your turn. Pause here and open the lab.
+Josh: Part A, check. Run the script and count the three refusals.
+Alex: Part B, connect. Add the brain to one app and restart it.
+Josh: Part C, use it. Ask with citations, remember a fact, and save a page to the inbox.
+Alex: Part D, break it. Ask the brain tools to write into raw. They must refuse.
+Josh: And Part E. Point a second app at the same brain. Do you get the same answer?
+
+[8:33] check
+Alex: Quick check. Pause after each question.
+Josh: One. What does one brain server fix that per-app memory can't?
+Alex: Two. What's the difference between a tool, a resource and a prompt?
+Josh: Three. When do you use stdio, and what three rules come before sharing over HTTP?
+Alex: Four. Why does the same server need a different config snippet in each app?
+Josh: Five. Name the three locks on a save, and why every read is labeled as data.
+Alex: And six. When is the Obsidian command line the right tool, and what are its two catches?
+
+[9:13] bridge
+Josh: So the brain has a front door now. Any app can knock.
+Alex: Next time is the last stop. Part 6: keeping it alive, and keeping it safe.
+Josh: Look at the figure. An owl on night watch, at three in the morning.
+Alex: That's the heartbeat. While you sleep, it tidies memory, re-indexes and checks the brain's health.
+Josh: Bring your connected brain and your lab log. See you in Part 6.
