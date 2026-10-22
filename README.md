@@ -206,7 +206,7 @@ All six parts are out. Each one has a video, slides as a PDF, a hands-on lab wit
 
 ## video tutorials
 
-Watch them in order in the [YouTube playlist](https://www.youtube.com/playlist?list=PLaleqILsm2uQ), or jump to any part.
+New here? Watch the [2-minute trailer](https://youtu.be/XpyePfCoe-g) first. Then watch the parts in order in the [YouTube playlist](https://www.youtube.com/playlist?list=PLaleqILsm2uQ), or jump to any part.
 
 <table>
 <tr>
