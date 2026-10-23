@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://www.youtube.com/playlist?list=PLBx8rYlb7T2Y"><img src="../docs/assets/banner.svg" alt="La capa de memoria: construye un segundo cerebro para tu IA" width="100%"></a>
+  <a href="https://www.youtube.com/playlist?list=PLBx8rYlb7T2Y"><img src="docs/assets/banner.svg" alt="La capa de memoria: construye un segundo cerebro para tu IA" width="100%"></a>
 </p>
 
 <div align="center">
@@ -75,7 +75,7 @@ Cambia de modelo o de app, y el cerebro se va contigo.
 
 </td>
 <td width="48%" valign="top">
-<img src="../docs/assets/one-brain-every-app.gif" width="100%" alt="Animación: cuatro apps de IA se conectan a un solo cerebro con un solo servidor MCP">
+<img src="docs/assets/one-brain-every-app.gif" width="100%" alt="Animación: cuatro apps de IA se conectan a un solo cerebro con un solo servidor MCP">
 <br><sub><i>Un cerebro, un conector, todas las apps (de la Parte 5).</i></sub>
 </td>
 </tr>
@@ -296,22 +296,22 @@ flowchart TD
 <table>
 <tr>
 <td width="33%" valign="top" align="center">
-<img src="../docs/assets/ingest.gif" width="100%" alt="Animación: una fuente se incorpora en seis páginas de wiki enlazadas">
+<img src="docs/assets/ingest.gif" width="100%" alt="Animación: una fuente se incorpora en seis páginas de wiki enlazadas">
 <br><b>1 · Ingesta</b><br><sub>Lee una fuente una vez y archívala en cada página que toca, con enlaces y una entrada en el registro.</sub>
 </td>
 <td width="33%" valign="top" align="center">
-<img src="../docs/assets/recall-ladder.svg" width="100%" alt="La escalera de recuperación: core.md, index.md, búsqueda, enlaces, raw; la IA se detiene en el primer peldaño que responde">
+<img src="docs/assets/recall-ladder.svg" width="100%" alt="La escalera de recuperación: core.md, index.md, búsqueda, enlaces, raw; la IA se detiene en el primer peldaño que responde">
 <br><b>2 · Recuperación</b><br><sub>La IA sube por la escalera empezando por lo más barato y se detiene en cuanto tiene la respuesta, lo que ahorra tokens (pedazos de texto que el modelo lee y escribe).</sub>
 </td>
 <td width="33%" valign="top" align="center">
-<img src="../docs/assets/guardrails.gif" width="100%" alt="Animación: cada guardado pasa por tres candados antes de escribirse">
+<img src="docs/assets/guardrails.gif" width="100%" alt="Animación: cada guardado pasa por tres candados antes de escribirse">
 <br><b>3 · Protección</b><br><sub>Cada guardado pasa por tres candados. <code>raw/</code> es de solo lectura, y las notas son datos, nunca órdenes.</sub>
 </td>
 </tr>
 </table>
 
 <p align="center">
-<img src="../docs/assets/hybrid-search.gif" width="100%" alt="Animación: los rankings por palabras y por significado se combinan con Reciprocal Rank Fusion">
+<img src="docs/assets/hybrid-search.gif" width="100%" alt="Animación: los rankings por palabras y por significado se combinan con Reciprocal Rank Fusion">
 <br><sub><b>Dentro del peldaño 3:</b> la búsqueda por palabras clave (BM25) y la búsqueda por significado (embeddings locales: representaciones numéricas del significado de un texto) ordenan las páginas cada una por su lado, y Reciprocal Rank Fusion (fusión recíproca de rankings) premia las páginas en las que ambas coinciden. Los embeddings corren localmente con Ollama, así que tus notas nunca salen de tu computadora.</sub>
 </p>
 
@@ -322,15 +322,15 @@ El cerebro se cuida solo con un horario, pero solo propone cambios, y se detiene
 <table>
 <tr>
 <td width="33%" valign="top" align="center">
-<img src="../docs/assets/schedule.gif" width="100%" alt="Animación: cron omite las corridas perdidas mientras la computadora duerme; launchd corre una vez al despertar; ambos se saltan la corrida si está apagada">
+<img src="docs/assets/schedule.gif" width="100%" alt="Animación: cron omite las corridas perdidas mientras la computadora duerme; launchd corre una vez al despertar; ambos se saltan la corrida si está apagada">
 <br><b>Córrelo cada noche</b><br><sub>launchd se pone al día después de la suspensión (tres noches perdidas = una corrida); cron no. Apagada es apagada.</sub>
 </td>
 <td width="33%" valign="top" align="center">
-<img src="../docs/assets/heartbeat.gif" width="100%" alt="Animación: el latido corre pasos fijos, un agente sin interfaz (headless) propone cambios, la memoria central y las fuentes crudas quedan bloqueadas, una persona revisa, un solo commit de git">
+<img src="docs/assets/heartbeat.gif" width="100%" alt="Animación: el latido corre pasos fijos, un agente sin interfaz (headless) propone cambios, la memoria central y las fuentes crudas quedan bloqueadas, una persona revisa, un solo commit de git">
 <br><b>Propone. Tú decides.</b><br><sub>Nunca edita <code>raw/</code> ni <code>memory/core.md</code>. Un commit por noche, fácil de revertir.</sub>
 </td>
 <td width="33%" valign="top" align="center">
-<img src="../docs/assets/invisible-ink.gif" width="100%" alt="Animación: un escaneo revela una instrucción escondida con Unicode invisible en una página recortada; el latido omite su paso de reflexión">
+<img src="docs/assets/invisible-ink.gif" width="100%" alt="Animación: un escaneo revela una instrucción escondida con Unicode invisible en una página recortada; el latido omite su paso de reflexión">
 <br><b>Cuarentena para la tinta invisible</b><br><sub>¿Unicode oculto o líneas que parecen inyección? El lint las marca y se omite el paso de IA.</sub>
 </td>
 </tr>
