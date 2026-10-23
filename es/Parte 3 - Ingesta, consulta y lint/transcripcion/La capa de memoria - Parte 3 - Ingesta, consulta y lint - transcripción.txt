@@ -1,0 +1,157 @@
+La capa de memoria - Parte 3 - Ingesta, consulta y lint — transcripción
+
+Capítulos:
+0:00 Bienvenida
+0:42 Lo que vas a aprender
+1:12 Caja de zapatos vs. libro mayor: compila una vez
+2:20 Qué dice la investigación
+3:24 Una ingesta, paso a paso
+4:28 La analogía de la biblioteca
+5:06 Busca antes de crear (y los conflictos)
+6:11 Pregunta una vez, archiva la respuesta
+7:07 Cita cada afirmación y revisa dos
+7:57 Lint: corrector ortográfico + editor
+8:55 Git como botón de deshacer
+9:52 Tres formas en que falla una ingesta
+10:36 Recorrido: una fuente, de principio a fin
+11:15 La regla de oro
+11:35 Laboratorio 3: ingesta, consulta, lint, deshacer
+12:18 Pon a prueba lo aprendido
+13:02 Siguiente: Parte 4
+
+[0:00] Bienvenida
+Antonio: Te damos de nuevo la bienvenida a La capa de memoria. Soy Antonio.
+Isabella: Y yo soy Isabella. Esta es la Parte 3: ingesta, consulta y lint.
+Antonio: En la Parte 2 escribimos el manual de operación del cerebro y pasamos cada procedimiento a skills. Hoy usamos esas skills de verdad.
+Isabella: Mira la figura. Arriba hay una sola fuente cruda: la transcripción de una plática.
+Antonio: La skill de ingesta la lee una vez, y se iluminan seis páginas de la wiki, enlazadas entre sí.
+Isabella: Luego el índice y el registro reciben su línea. Léelo una vez. Archívalo en todos lados.
+
+[0:42] Lo que vas a aprender
+Isabella: Al terminar este video, podrás hacer cuatro cosas.
+Antonio: Explicar por qué una wiki compilada supera releer tus fuentes cada vez, y qué costo tiene.
+Isabella: Hacer una ingesta que actualiza antes de crear, cita cada afirmación y queda en el registro.
+Antonio: Responder con citas y guardar las buenas respuestas, para que el conocimiento se acumule.
+Isabella: Y pasar el lint, la revisión automática del cerebro, y deshacer una mala ingesta con git.
+
+[1:12] Caja de zapatos vs. libro mayor: compila una vez
+Antonio: Empecemos por el problema. Casi todas las herramientas de IA responden sobre tus documentos buscando en los archivos crudos cada vez.
+Isabella: Andrej Karpathy describió el patrón que sigue esta serie. Dijo que la IA redescubre el conocimiento desde cero en cada pregunta.
+Antonio: Imagina una caja de zapatos llena de recibos. Llega una pregunta: ¿cuál fue el total de marzo?
+Isabella: La IA saca los recibos, los ordena, los suma y los vuelve a guardar.
+Antonio: Luego llega una segunda pregunta. Y vuelve a buscar en toda la caja. El mismo trabajo, dos veces.
+Isabella: Ahora, la otra forma. Un libro mayor. Cada recibo se anota una vez, cuando llega. Eso es la ingesta.
+Antonio: Cuando llega la pregunta, un vistazo al libro mayor la responde, con una cita que lleva al recibo.
+Isabella: Y guardamos la caja de zapatos, como la carpeta raw de fuentes crudas, para auditorías y citas exactas. Compila una vez. Mantenlo al día. Guarda los recibos.
+
+[2:20] Qué dice la investigación
+Isabella: ¿De verdad ayuda compilar? Esto dice la investigación.
+Antonio: GraphRAG, de Microsoft, prepara resúmenes por adelantado. En preguntas sobre toda una colección, superó en exhaustividad a la recuperación simple. Ganó entre el setenta y dos y el ochenta y tres por ciento de las veces.
+Isabella: RAPTOR construye un árbol de resúmenes, y subió veinte puntos la precisión en un conjunto de pruebas de documentos largos.
+Antonio: Pero tiene un precio. Un estudio de 2026 encontró que un agente con wiki usó unas veintiún veces más tokens por pregunta. Y la recuperación simple aguantó en datos puntuales.
+Isabella: Otro estudio de 2026 encontró que las wikis compiladas a ciegas perdían datos. Un ciclo de revisar y reparar bajó las fallas graves de cerca del cincuenta y cinco por ciento al veinticinco.
+Antonio: Entonces: compila para síntesis y reúso. Guarda raw para los datos exactos. Y deja que el lint atrape lo que pierde la compresión.
+
+[3:24] Una ingesta, paso a paso
+Antonio: Esta es una ingesta, paso a paso.
+Isabella: Paso uno, leer. Llega la fuente, la IA la lee completa y enuncia de tres a cinco ideas clave antes de escribir nada.
+Antonio: Paso dos, fuente. Crea una página de fuente, con los puntos clave, citas textuales y un enlace al archivo crudo.
+Isabella: Paso tres, buscar. Busca antes de crear. Una lupa recorre las páginas que ya existen.
+Antonio: Paso cuatro, cambiar. Cinco páginas existentes reciben la afirmación nueva, cada una con su cita. Solo se crea una página realmente nueva.
+Isabella: Paso cinco, índice. El índice recibe su línea, y el registro anota lo que pasó.
+Antonio: Y paso seis, commit. El lint revisa los enlaces, y el cambio queda guardado en un commit de git.
+Isabella: Ese es el presupuesto. Una página de fuente, de tres a ocho cambios y de cero a tres páginas nuevas.
+
+[4:28] La analogía de la biblioteca
+Isabella: Si quieres una sola imagen de la ingesta, piensa en una buena bibliotecaria que recibe un libro nuevo.
+Antonio: No reescribe el libro. Va a su estante tal como llegó. Esa es la carpeta raw.
+Isabella: Hace una ficha y actualiza el catálogo, para que nadie tenga que releer el libro para saber qué contiene. Eso son la página de fuente y el índice.
+Antonio: Mira la figura. El libro sale del estante y se abre. Las líneas clave se resaltan, y esas notas vuelan a la carpeta del cerebro.
+Isabella: Lee el libro una vez. Guarda las notas para siempre.
+
+[5:06] Busca antes de crear (y los conflictos)
+Antonio: La forma más común en que un cerebro se deteriora es la fragmentación. Tres páginas sobre lo mismo, cada una un poco distinta.
+Isabella: La solución es buscar antes de crear. Piensa en un archivista que busca un expediente antes de abrir uno nuevo.
+Antonio: Mira la figura. Llega un dato nuevo, de la plática: la Parte 3 dura noventa minutos.
+Isabella: La búsqueda regresa tres páginas candidatas, con su puntaje de similitud.
+Antonio: La IA elige una de cuatro acciones: agregar, actualizar, sin cambio o marcar. Aquí actualiza la página de duración de la parte, con su cita.
+Isabella: Luego llega un segundo dato, de un correo. Sesenta minutos. Contradice al primero.
+Antonio: La IA no sobrescribe. Guarda las dos afirmaciones en un aviso de conflicto, marcado sin resolver, y pide la decisión a una persona.
+Isabella: Actualiza antes de crear. No sobrescribas conflictos.
+
+[6:11] Pregunta una vez, archiva la respuesta
+Isabella: Ahora, la consulta. Aquí el conocimiento empieza a acumularse.
+Antonio: La analogía es el interés compuesto. Cada buena respuesta que archivas paga en cada pregunta posterior.
+Isabella: Mira la figura. Llega una pregunta: ¿para qué guardamos raw?
+Antonio: La IA sube la escalera de recuperación, lo más barato primero. Memoria central: no está. El índice: dos páginas. Búsqueda: tres páginas. Con eso basta, y se detiene.
+Isabella: La respuesta lleva una cita en cada punto, y una última línea honesta: sin cubrir.
+Antonio: Luego guarda esa respuesta como página nueva y la agrega al índice.
+Isabella: La semana siguiente vuelve la misma pregunta. Ahora va directo del índice a la página guardada. Seis lecturas se vuelven una.
+
+[7:07] Cita cada afirmación y revisa dos
+Antonio: Cada respuesta cita sus fuentes. Pero una cita no es una prueba.
+Isabella: Un estudio de 2025 probó ocho buscadores con IA. Erraron la fuente de una noticia más del sesenta por ciento de las veces.
+Antonio: Otro estudio encontró que solo cerca de la mitad de las oraciones generadas tenía respaldo total en sus citas.
+Isabella: Los resúmenes también agregan datos sin respaldo: de cerca del dos al veinticuatro por ciento, según el modelo.
+Antonio: Y cuando televisoras públicas revisaron respuestas de IA sobre noticias, el cuarenta y cinco por ciento tenía un problema importante.
+Isabella: Una cita hace que una afirmación sea verificable, no verdadera. Después de cada ingesta, abre dos o tres citas y revísalas. Toma dos minutos.
+
+[7:57] Lint: corrector ortográfico + editor
+Isabella: Sigue el lint. La revisión de salud.
+Antonio: La analogía: un corrector ortográfico más un editor. Uno encuentra errores de dedo. El otro encuentra contradicciones.
+Isabella: Mira la parte de arriba de la figura. La pasada mecánica, brain lint, encuentra enlaces rotos, páginas huérfanas, una página fuera del índice y páginas obsoletas. Cada una se corrige.
+Antonio: Ahora, la parte de abajo. La pasada de criterio necesita al modelo. Dos páginas no coinciden: una dice que el lanzamiento es en marzo, la otra dice junio.
+Isabella: Eso se marca para que decida una persona, no se corrige en silencio. Y un concepto faltante, usado en cuatro páginas, recibe una página nueva sugerida.
+Antonio: Al final, una línea va al registro. Corrigió siete, marcó dos.
+
+[8:55] Git como botón de deshacer
+Antonio: El cerebro es solo una carpeta de archivos de texto. Así que git puede versionar cada cambio.
+Isabella: Piensa en el control de cambios, con máquina del tiempo. Cada edición se puede revisar, y deshacer con una nota.
+Antonio: Mira la línea de tiempo. Tres commits sanos: una ingesta, una respuesta guardada y una pasada de lint. Luego un cuarto, en coral. Una ingesta de una página web recortada.
+Isabella: El diff, la lista de cambios, muestra lo que de verdad hizo. Sobrescribió una fecha, metió una línea que dice ignora las reglas previas, y cambió tres páginas.
+Antonio: La solución es un comando. git revert. Aparece un commit nuevo que deshace el malo, y el commit malo se queda en el historial.
+Isabella: reset --hard lo borraría. Eso es arrancarle páginas al libro. Revierte, no borres.
+
+[9:52] Tres formas en que falla una ingesta
+Isabella: Tres formas en que falla una ingesta.
+Antonio: Demasiado. Capturar de más. Registrar cada detalle entierra las decisiones que importan.
+Isabella: Muy poco. Comprimir de más. Un estudio pidió resúmenes de la mitad del largo, y obtuvo un octavo.
+Antonio: Y hostil. Una página recortada esconde una instrucción como ignora tus reglas. En el cerebro, ese texto es un dato, nunca una orden. La Parte 6 profundiza.
+Isabella: Las barreras de seguridad caben en una línea. Un presupuesto de páginas, la carpeta raw intacta, el lint y un commit por cada cambio.
+
+[10:36] Recorrido: una fuente, de principio a fin
+Antonio: Veámoslo funcionar, de principio a fin.
+Isabella: Paso uno: ingesta de una fuente real. Ponemos la transcripción de la Parte 2 en la bandeja de entrada y decimos: incorpora esto.
+Antonio: Paso dos: lee el diff. Una página de fuente, algunos cambios, y las líneas del índice y del registro.
+Isabella: Paso tres: consulta y guarda. Pregunta por qué guardamos raw, revisa dos citas y guarda la respuesta.
+Antonio: Y paso cuatro: lint y deshacer. Pasa el lint, incorpora la página recortada y reviértela.
+
+[11:15] La regla de oro
+Isabella: Si recuerdas una sola cosa, que sea esta.
+Antonio: Léelo una vez. Archívalo en todos lados.
+Isabella: Cita cada afirmación.
+Antonio: Haz commit de cada cambio.
+Isabella: Cuando el cerebro se equivoca, corrige la página, no el prompt. Cuando una ingesta sale mal, reviértela.
+
+[11:35] Laboratorio 3: ingesta, consulta, lint, deshacer
+Antonio: Tu turno. Pausa aquí y abre el laboratorio.
+Isabella: Parte A, ingesta. Pon la transcripción de la Parte 2 en tu bandeja de entrada, incorpórala y haz commit.
+Antonio: Parte B, revisión. Lee el diff y abre dos citas. ¿Se sostienen?
+Isabella: Parte C, consulta. Haz las dos preguntas de la guía del laboratorio, y guarda la que necesitó síntesis de verdad.
+Antonio: Parte D, lint. Corrige un problema mecánico y anota un caso de criterio para que lo decida una persona.
+Isabella: Y Parte E, deshacer. Incorpora la página recortada, lee el diff y reviértela.
+
+[12:18] Pon a prueba lo aprendido
+Antonio: Repaso rápido. Pausa después de cada pregunta.
+Isabella: Uno. ¿Por qué compilar una wiki en vez de buscar en las fuentes crudas cada vez? Nombra un costo.
+Antonio: Dos. ¿Qué evita buscar antes de crear, y qué pasa cuando una afirmación nueva choca con otra?
+Isabella: Tres. Después de una ingesta, ¿qué debe revisar una persona, y cuánto tarda?
+Antonio: Cuatro. ¿Cuándo conviene guardar una respuesta como página?
+Isabella: Cinco. ¿Qué problemas de lint encuentra un script, y cuáles necesitan al modelo?
+Antonio: Y seis. ¿Por qué usar git revert en vez de reset --hard tras una mala ingesta?
+
+[13:02] Siguiente: Parte 4
+Isabella: Eso fue la Parte 3. Incorporamos una fuente real, respondimos con citas, guardamos la respuesta, pasamos el lint y deshicimos una mala ingesta.
+Antonio: La próxima vez, Parte 4: recuperación a escala. ¿Qué pasa cuando el índice crece demasiado para leerlo?
+Isabella: Mira la figura. Las palabras con significado parecido quedan juntas. Una palabra nueva, cachorro, cae junto a perro, gatito y lobo.
+Antonio: Eso es buscar por significado, no solo por palabras iguales. Trae tu cerebro y su registro. Nos vemos en la Parte 4.

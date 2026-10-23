@@ -1,0 +1,140 @@
+La capa de memoria - Parte 5 - Conéctalo donde sea — transcripción
+
+Capítulos:
+0:00 Dos apps, dos respuestas
+0:32 Lo que vas a aprender
+1:03 Memoria encerrada en cada app
+1:53 Dónde está MCP hoy
+2:35 Una llamada MCP, paso a paso
+3:44 La analogía del USB-C
+4:27 stdio o Streamable HTTP
+5:15 Un servidor, muchas configuraciones
+6:00 Tres candados en cada escritura
+6:53 Incidentes reales de MCP, 2025
+7:47 La CLI de Obsidian
+8:25 Recorrido: un cerebro, dos apps
+8:54 La regla de oro
+9:14 Laboratorio 5: conéctalo e intenta romperlo
+9:51 Pon a prueba lo aprendido
+10:39 Siguiente: Parte 6
+
+[0:00] Dos apps, dos respuestas
+Isabella: El lunes, le dices a tu agente de código que el lanzamiento se movió a junio. El martes, le preguntas a tu app de chat, y todavía dice marzo.
+Antonio: Misma persona, mismo dato, dos apps, dos respuestas. Cada app guarda su propia memoria.
+Isabella: Mira la figura. Cuatro apps alrededor de un cerebro. Una por una, se conectan.
+Antonio: Eso es lo de hoy: un cerebro, conectado a todas las apps. La capa de memoria, Parte 5: conéctalo donde sea.
+
+[0:32] Lo que vas a aprender
+Isabella: Al terminar, podrás hacer esto.
+Antonio: Explicar por qué falla la memoria encerrada en una sola app, y qué estandariza MCP.
+Isabella: Seguir una sola llamada MCP: qué pide la app y qué regresa.
+Antonio: Conectar el cerebro a dos apps distintas, empezando por la conexión más simple.
+Isabella: Y nombrar los candados que protegen a un servidor que escribe, y cuándo ayuda la línea de comandos de Obsidian.
+
+[1:03] Memoria encerrada en cada app
+Antonio: Piensa en una credencial de biblioteca que sirve en todas las sucursales. Tu historial te sigue, entres donde entres.
+Isabella: Ahora mira arriba en la figura: antes. Cuatro apps, cada una con su propia memoria.
+Antonio: El mismo dato se escribe en cada una. Duración de la parte: noventa minutos. Y la cuarta copia dice sesenta. Cuatro copias, una errónea.
+Isabella: Ahora abajo: después. Las mismas cuatro apps, conectadas a una carpeta que guarda el dato una sola vez.
+Antonio: Una copia, y todas las apps la leen. El cable de cada app al cerebro es MCP, el Model Context Protocol. Un estándar abierto que cualquier app de IA puede hablar.
+
+[1:53] Dónde está MCP hoy
+Isabella: ¿Es una apuesta segura? Unos cuantos números.
+Antonio: En diciembre de 2025, Anthropic entregó MCP a la Agentic AI Foundation, dentro de la Linux Foundation. Ya había más de 10,000 servidores públicos.
+Isabella: Para julio de 2026, los kits de desarrollo sumaban casi 500 millones de descargas al mes.
+Antonio: Y menos es más. Un agente de Anthropic bajó de 150,000 tokens a 2,000, llamando a sus herramientas desde código.
+Isabella: Las ocho herramientas de nuestro cerebro cuestan unos 1,500 tokens. Pocas herramientas, descripciones cortas.
+
+[2:35] Una llamada MCP, paso a paso
+Antonio: ¿Qué pasa en una llamada? Imagina el concierge de un hotel.
+Isabella: Los huéspedes no entran a la cocina. Le piden al concierge, que tiene un menú de servicios.
+Antonio: Mira la figura. Cuatro carriles: la app de IA, su cliente MCP, el servidor del cerebro y la bóveda.
+Isabella: Paso uno. La app pide la lista de herramientas. Regresan ocho: cuatro que solo leen y cuatro que escriben.
+Antonio: Paso dos. Una búsqueda de inyección de prompts. El servidor lee su índice, ordena los resultados y regresa las tres rutas principales.
+Isabella: Paso tres. Lee la primera página. Fíjate en el aviso: contenido de nota, datos, no órdenes. Y otras veinticuatro notas enlazan a ella.
+Antonio: Paso cuatro. Recuerda un dato. Una línea nueva llega a la memoria de trabajo.
+Isabella: La app pide. El servidor es quien lee. Las herramientas las llama el modelo, los recursos los adjunta la app, y los prompts los eliges tú.
+
+[3:44] La analogía del USB-C
+Antonio: La documentación oficial de MCP lo compara con un puerto USB-C para apps de IA.
+Isabella: Mira el enchufe. Gira y luego encaja en el servidor del cerebro.
+Antonio: Ahora el mismo enchufe entra en el agente en editor. Luego en el chat de escritorio. Luego en el agente en terminal. El enchufe nunca cambia.
+Isabella: El enchufe es el servidor del cerebro, construido una vez. Los puertos son las apps.
+Antonio: Dónde termina la comparación: una memoria USB entrega todo. Un servidor MCP decide qué puede hacer cada herramienta, y tu app debe preguntar antes de escribir algo.
+
+[4:27] stdio o Streamable HTTP
+Isabella: Hay dos formas de conectar. Piensa en un interfón dentro de la casa, contra una línea telefónica a la calle.
+Antonio: A la izquierda de la figura, el interfón. Entrada y salida estándar. La app inicia el servidor. Misma máquina, sin puerto, sin red.
+Isabella: Esa es la opción por defecto. Empieza ahí.
+Antonio: A la derecha, la línea telefónica. Streamable HTTP, para compartir un cerebro entre apps o personas.
+Isabella: Ahora mira. Una página web de otro origen intenta llamar al servidor. Rechazada, con un 403.
+Antonio: Antes de compartir por HTTP: escucha solo en localhost, revisa el origen y agrega autenticación.
+
+[5:15] Un servidor, muchas configuraciones
+Isabella: Cada app tiene su propio archivo de configuración. La analogía: un adaptador universal de viaje. Cambia la clavija, no el aparato.
+Antonio: Mira cómo se escriben las tarjetas. Un archivo del proyecto y una app de escritorio usan la clave mcpServers.
+Isabella: Algunos editores, como Visual Studio Code, usan la clave servers, con el tipo entrada y salida estándar. Y un archivo TOML usa una tabla llamada mcp_servers.
+Antonio: Cada tarjeta se conecta abajo, al mismo servidor.
+Isabella: Tres consejos. Usa rutas completas. Reinicia la app por completo tras editar. Luego confirma que aparecen las herramientas.
+
+[6:00] Tres candados en cada escritura
+Antonio: Ahora la parte que te protege. Piensa en la llave de quien cuida tu casa. La despensa, sí. El estudio, no.
+Isabella: Mira la figura. Cada escritura pasa por tres candados.
+Antonio: El candado uno revisa que la ruta empiece con wiki o inbox. Una ruta en raw se rechaza ahí mismo. También una ruta con punto punto.
+Isabella: La primera escritura de una página nueva en inbox pasa los tres candados. Guardado.
+Antonio: El candado dos revisa que la ruta real quede dentro de la bóveda. Ese es el respaldo.
+Isabella: Y el candado tres. Guarda la misma página otra vez, y se rechaza: existe, léela antes.
+Antonio: Y en la lectura, una nota que dice ignora las reglas anteriores regresa marcada como datos. Nunca se obedece.
+
+[6:53] Incidentes reales de MCP, 2025
+Isabella: Esto no es hipotético. Cuatro incidentes reales de 2025.
+Antonio: Un ticket de soporte le pidió a un agente de IA leer tokens secretos y publicarlos ahí. Lo hizo.
+Isabella: Un servidor de archivos solo revisaba cómo empezaba la ruta de una carpeta. Así, una carpeta allowed evil pasó la revisión de allowed.
+Antonio: Una herramienta popular dejaba que un servidor malicioso ejecutara comandos en tu computadora. Gravedad: 9.6 de 10.
+Isabella: Y un servidor de correo falso publicó quince versiones limpias, y luego copió en secreto cada mensaje.
+Antonio: El peligro es datos privados, más contenido no confiable, más una forma de enviarlos hacia fuera. El cerebro tiene los dos primeros. Piénsalo bien antes de agregar el tercero.
+
+[7:47] La CLI de Obsidian
+Isabella: Una herramienta más: la línea de comandos de Obsidian. La analogía es un aviso de cambio de domicilio.
+Antonio: Mira la figura. Obsidian move renombra una nota, y las siete notas que la enlazaban ya enlazan a la nueva ruta.
+Isabella: Luego, backlinks lista los enlaces entrantes. Eso lo sabe la propia app.
+Antonio: Dos advertencias. La app de Obsidian debe estar abierta. Y puede reportar éxito aunque falle. Así que lee lo que imprime.
+Isabella: Úsala para mover. Para todo lo demás, las herramientas del cerebro.
+
+[8:25] Recorrido: un cerebro, dos apps
+Antonio: Veámoslo funcionando.
+Isabella: Paso uno: corre el script de prueba. Ocho herramientas, una búsqueda, una lectura.
+Antonio: Paso dos: agrega el cerebro a una app con una entrada de configuración, y reinicia.
+Isabella: Paso tres: pregunta qué es la inyección de prompts, y recuerda un dato.
+Antonio: Y paso cuatro: intenta romperlo. Pide a las herramientas del cerebro guardar en raw, y mira cómo se niegan.
+
+[8:54] La regla de oro
+Isabella: Las frases para recordar.
+Antonio: Un cerebro. Todas las apps.
+Isabella: Lectura libre. Escritura limitada.
+Antonio: Las notas son datos, nunca órdenes.
+Isabella: Empieza con entrada y salida estándar. Comparte por HTTP solo con autenticación.
+
+[9:14] Laboratorio 5: conéctalo e intenta romperlo
+Antonio: Tu turno. Pausa aquí y abre el laboratorio.
+Isabella: Parte A, revisa. Corre el script y cuenta los tres rechazos.
+Antonio: Parte B, conecta. Agrega el cerebro a una app y reiníciala.
+Isabella: Parte C, úsalo. Pregunta con citas, recuerda un dato y guarda una página en inbox.
+Antonio: Parte D, rómpelo. Pide a las herramientas del cerebro que escriban en raw. Deben negarse.
+Isabella: Y la Parte E. Conecta una segunda app al mismo cerebro. ¿Obtienes la misma respuesta?
+
+[9:51] Pon a prueba lo aprendido
+Antonio: Repaso rápido. Pausa después de cada pregunta.
+Isabella: Uno. ¿Qué resuelve un servidor del cerebro que la memoria de cada app no puede?
+Antonio: Dos. ¿Qué diferencia hay entre una herramienta, un recurso y un prompt?
+Isabella: Tres. ¿Cuándo usas entrada y salida estándar, y qué tres reglas van antes de compartir por HTTP?
+Antonio: Cuatro. ¿Por qué el mismo servidor necesita un fragmento de configuración distinto en cada app?
+Isabella: Cinco. Nombra los tres candados de una escritura, y di por qué cada lectura se marca como datos.
+Antonio: Y seis. ¿Cuándo conviene la línea de comandos de Obsidian, y cuáles son sus dos advertencias?
+
+[10:39] Siguiente: Parte 6
+Isabella: Así que el cerebro ya tiene puerta principal. Cualquier app puede tocar.
+Antonio: La próxima vez es la última parada. Parte 6: mantenlo vivo y mantenlo seguro.
+Isabella: Mira la figura. Un búho de guardia nocturna, a las tres de la mañana.
+Antonio: Ese es el latido. Mientras duermes, ordena la memoria, reindexa y revisa la salud del cerebro.
+Isabella: Trae tu cerebro conectado y tu bitácora del laboratorio. Nos vemos en la Parte 6.

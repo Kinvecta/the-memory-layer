@@ -1,0 +1,7 @@
+question,expected,type
+streamable HTTP vs stdio,mcp-transports-stdio-vs-http,exact term
+cosign,image-signing-and-provenance,exact term
+how do I stop a web page from hijacking my AI assistant,prompt-injection,paraphrase
+why does the assistant forget everything between chats,agent-memory-layers,paraphrase
+which model should I pick if the vendor disappears,ai-resilience,paraphrase
+crawl walk run,five-stage-training-progression,team nickname

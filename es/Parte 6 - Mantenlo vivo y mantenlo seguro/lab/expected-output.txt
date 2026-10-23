@@ -1,0 +1,26 @@
+copy: /tmp/lab6-nqtitcu0/vault
+
+1) clean vault
+   lint issues: 0
+
+2) plant two clippings in inbox/
+   + inbox/planted-clip.md
+   + inbox/invisible-ink.md
+   hidden_characters: inbox/invisible-ink.md:4  (U+E0020)
+   injection_suspects: inbox/planted-clip.md:7  (ignore your previous instructions)
+
+3) heartbeat with a reflect step
+   reflect: {'skipped': 'quarantined'}
+   quarantined: {'hidden_characters': 1, 'injection_suspects': 1}
+   commit: created
+   log: …→ [[memory/reports/2026-10-22]]; reflect skipped (quarantined)
+
+4) a person reviews the clippings and removes them
+   reflect: echo (returncode 0)
+   commit: created
+
+ec38b01 heartbeat: 2026-10-22
+a68d542 remove bad clippings
+51e4f65 heartbeat: 2026-10-22
+4f17e15 plant clippings
+87b611f baseline

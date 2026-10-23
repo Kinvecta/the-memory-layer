@@ -1,0 +1,143 @@
+La capa de memoria - Parte 4 - Recuperación a escala — transcripción
+
+Capítulos:
+0:00 Bienvenida
+0:35 Lo que vas a aprender
+1:06 Tiendita vs. bodega: cuando el índice no alcanza
+2:10 Qué dice la investigación
+3:05 Búsqueda por palabras clave (BM25): las raras pesan más
+4:05 Búsqueda por significado (embeddings)
+5:07 Embeddings locales: nada sale de tu computadora
+5:42 Búsqueda híbrida: dos jueces, un ranking (RRF)
+6:28 Fragmentación: corta en encabezados, sella cada tarjeta
+7:06 Mide la recuperación: un examen con clave de respuestas
+8:31 Tres formas en que la búsqueda falla en silencio
+9:02 Recorrido: la misma pregunta, tres búsquedas
+9:38 La regla de oro
+10:00 Laboratorio 4: indexa, califica, corrige
+10:42 Pon a prueba lo aprendido
+11:30 Siguiente: Parte 5
+
+[0:00] Bienvenida
+Antonio: Te damos de nuevo la bienvenida a La capa de memoria. Soy Antonio.
+Isabella: Y yo soy Isabella. Esta es la Parte 4: recuperación a escala.
+Antonio: Hasta ahora, la IA encuentra las páginas leyendo el índice. Hoy el cerebro crece demasiado para eso.
+Isabella: Mira la figura. El haz de un faro recorre la niebla. Las páginas esperan afuera, en la oscuridad.
+Antonio: El haz pasa sobre ellas, y solo una se vuelve dorada. Eso es la búsqueda. Ilumina lo que importa.
+
+[0:35] Lo que vas a aprender
+Isabella: Al terminar este video, podrás hacer cuatro cosas.
+Antonio: Explicar cuándo el índice deja de alcanzar, y por qué cargarlo todo falla.
+Isabella: Comparar la búsqueda por palabras clave con la búsqueda por significado, y saber cuándo gana cada una.
+Antonio: Usar la búsqueda híbrida, que fusiona las dos, sobre fragmentos pequeños sellados con resúmenes y alias.
+Isabella: Y medir la recuperación con una pequeña clave de respuestas, y luego corregir una falla.
+
+[1:06] Tiendita vs. bodega: cuando el índice no alcanza
+Antonio: Empecemos por el problema. Piensa en una tiendita de la esquina contra una bodega.
+Isabella: En la tiendita puedes revisar cada estante. En una bodega necesitas un catálogo y un buscador.
+Antonio: Mira la figura. La ficha del índice se llena conforme crece el cerebro. Cincuenta páginas, cien, doscientas, quinientas.
+Isabella: El medidor del tope de lectura se pone rojo y se desborda. Es demasiado largo para leerlo de una vez.
+Antonio: Andrej Karpathy dice que el archivo índice funciona sorprendentemente bien a escala moderada: unas cien fuentes y cientos de páginas. Más allá, conviene una búsqueda de verdad.
+Isabella: Ahora, la gráfica de abajo. La precisión según dónde está la respuesta en una entrada larga. Tiene forma de U. Lo del medio se pierde.
+Antonio: Luego un paso de búsqueda saca solo las tres páginas que importan. Con cientos de páginas, busca. No lo leas todo.
+
+[2:10] Qué dice la investigación
+Isabella: Esto dice la investigación.
+Antonio: Veamos el estudio Lost in the Middle. Con la respuesta enterrada a la mitad de veinte documentos, un modelo sacó 53.8%. Eso es menos que sin ningún documento.
+Isabella: Chroma probó dieciocho modelos. Los dieciocho empeoraron al crecer la entrada.
+Antonio: Anthropic agregó contexto a cada fragmento y combinó la búsqueda por significado con la de palabras clave. Las recuperaciones fallidas bajaron un 49%. Con un reranker, un modelo que reordena los resultados, bajaron un 67%.
+Isabella: Elastic encontró que fusionar los rankings de palabras y significado le ganó por 18% a las palabras solas.
+Antonio: Así que recupera las pocas páginas que importan. Y combina palabras con significado.
+
+[3:05] Búsqueda por palabras clave (BM25): las raras pesan más
+Antonio: Primero, la búsqueda por palabras clave. El método estándar se llama BM25.
+Isabella: La analogía es el índice al final de un libro. Buscas un código de error y te manda directo a la página 212.
+Antonio: Mira la figura. La consulta es: ORA-01017, login error.
+Isabella: Cada palabra recibe un peso. El código de error es raro, así que pesa más. La palabra común, error, está en todos lados, así que pesa poco.
+Antonio: Luego suben las menciones de cada página. Más menciones ayudan, pero cada vez menos. La quinta mención suma poco.
+Isabella: La página larga de notas de reunión recibe un castigo por largo. Así no gana solo por tener más palabras.
+Antonio: Las filas se reordenan, y la página con el código raro sube al primer lugar. Las palabras raras pesan más. Gana lo exacto.
+
+[4:05] Búsqueda por significado (embeddings)
+Isabella: Segundo, la búsqueda por significado.
+Antonio: La analogía es una bibliotecaria que entiende el significado. Le preguntas cómo arreglar tu carro, y te trae la carpeta de vehículos. Pero pídele la pieza 4471-B, y titubea.
+Isabella: Mira la figura. Una página pasa por un modelo de embeddings que corre en tu computadora. Sale como 768 números: las coordenadas de su significado.
+Antonio: Luego, una pregunta: ¿cuánto toma una clase? Pasa por el mismo modelo, y su punto dorado cae justo junto a la página de duración de las partes.
+Isabella: Se iluminan las tres páginas más cercanas. Y fíjate: la pregunta y la página no comparten ninguna palabra. La búsqueda por palabras no encuentra nada.
+Antonio: Sus puntos débiles son los códigos exactos, los números y la negación, como la palabra no. Por eso no elegimos una. Usamos las dos.
+
+[5:07] Embeddings locales: nada sale de tu computadora
+Isabella: ¿Dónde vive ese significado? En tu propia computadora.
+Antonio: Brain-tools usa un modelo abierto y pequeño llamado Nomic Embed Text, a través de Ollama. Pesa como un cuarto de gigabyte.
+Isabella: Mira la galaxia. Las palabras parecidas se agrupan. Una palabra nueva, cachorro, cae junto a perro, gatito y lobo.
+Antonio: Tus notas y sus vectores se quedan en un solo archivo local. Nada se manda a un servicio en la nube.
+Isabella: Y si Ollama no está corriendo, la búsqueda simplemente regresa a las palabras clave.
+
+[5:42] Búsqueda híbrida: dos jueces, un ranking (RRF)
+Antonio: Ahora, a combinarlas. Esto es la búsqueda híbrida.
+Isabella: La analogía son dos jueces. Uno juzga las palabras; el otro, el significado. Sus puntajes usan escalas distintas, así que no puedes simplemente promediarlos.
+Antonio: En su lugar, cada lista le da a una página 1/(60 + su posición). Mira la fórmula que aparece en el centro.
+Isabella: Se arma la lista fusionada. db-login queda segunda por palabras y primera por significado. Sube hasta arriba.
+Antonio: Las páginas que solo le gustaron a un juez tienen un solo cable, y quedan más abajo.
+Isabella: El acuerdo sube. Sin igualar escalas de puntaje.
+
+[6:28] Fragmentación: corta en encabezados, sella cada tarjeta
+Antonio: La búsqueda no indexa páginas completas. Indexa fragmentos.
+Isabella: La analogía: tarjetas de recetas con buenos títulos y apodos. Un platillo por tarjeta, fácil de encontrar.
+Antonio: Mira cómo la nota se corta en sus encabezados, en cuatro tarjetas. Cada una tiene 220 palabras o menos.
+Isabella: Luego un sello dorado cae sobre cada tarjeta: el resumen de la nota y sus alias. Sus apodos.
+Antonio: Llega una consulta: orden de lectura. Y se ilumina la segunda tarjeta. Hallada por su alias.
+
+[7:06] Mide la recuperación: un examen con clave de respuestas
+Isabella: ¿Cómo sabes si un cambio de verdad ayudó? Lo mides.
+Antonio: La analogía es un examen con clave de respuestas. Repites el mismo examen después de cada cambio.
+Isabella: Esta figura es una corrida real sobre la bóveda de referencia. Seis preguntas, cada una con la página que debería responderla. Cada celda es la posición en que regresó esa página.
+Antonio: Los términos exactos, como cosign, quedan primeros en todos los modos. Las paráfrasis varían. Why does it forget, por qué olvida entre chats, queda quinta por palabras, segunda por significado y tercera en híbrida.
+Isabella: Y crawl, walk, run, el apodo del equipo para la ruta de capacitación, no aparece en ninguno de los tres.
+Antonio: Dos puntajes. Recall@5: ¿la página correcta quedó entre las cinco primeras? Cinco de seis, en todos los modos.
+Isabella: Y MRR, el promedio de uno entre la posición. Ahí la híbrida queda más alta, con 0.72.
+Antonio: Ahora, la corrección. Agrega crawl, walk, run como alias, reindexa y vuelve a correr. La fila seis queda en uno, tres, uno. Seis de seis, y la híbrida sube a 0.89.
+
+[8:31] Tres formas en que la búsqueda falla en silencio
+Antonio: Tres formas en que la búsqueda falla en silencio.
+Isabella: Unilateral. La híbrida puede enterrar una página que solo un juez encuentra. Así que cuando una pregunta falla, revisa cada modo.
+Antonio: Desactualizado. La búsqueda lee el índice, no tus notas. Corre brain index después de editar.
+Isabella: Y cambiado. Los vectores de dos modelos distintos no se mezclan. Si cambias el modelo, reindexa antes de buscar.
+
+[9:02] Recorrido: la misma pregunta, tres búsquedas
+Isabella: Veámoslo funcionar.
+Antonio: Paso uno: indexa la bóveda. Primero las palabras clave, en segundos. Luego los vectores, con Ollama corriendo.
+Isabella: Paso dos: busca cosign en los tres modos. Los tres ponen primero la página correcta.
+Antonio: Paso tres: una paráfrasis. ¿Por qué el asistente lo olvida todo entre chats? Ahora las posiciones cambian.
+Isabella: Y paso cuatro: corrige una falla. Agrega el alias crawl, walk, run, reindexa y repite el examen.
+
+[9:38] La regla de oro
+Antonio: Si recuerdas una sola cosa, que sea esta.
+Isabella: Palabras para lo exacto. Significado para las ideas.
+Antonio: Fusiona los rankings.
+Isabella: Mide cada cambio.
+Antonio: Cuando la búsqueda no encuentra una página, corrige la página: su resumen y sus alias. Luego repite el examen.
+
+[10:00] Laboratorio 4: indexa, califica, corrige
+Isabella: Tu turno. Pausa aquí y abre el laboratorio.
+Antonio: Parte A, indexa. Construye el índice por palabras clave, luego agrega los vectores y revisa las estadísticas.
+Isabella: Parte B, califica. Corre la clave de respuestas en los tres modos y anota las posiciones.
+Antonio: Parte C, explica. Elige una fila donde los modos no coincidan, y di por qué.
+Isabella: Parte D, corrige. Agrega el alias crawl, walk, run, reindexa y califica otra vez.
+Antonio: Y Parte E, amplía. Agrega una pregunta real tuya.
+
+[10:42] Pon a prueba lo aprendido
+Isabella: Repaso rápido. Pausa después de cada pregunta.
+Antonio: Uno. ¿Por qué el índice no basta con cientos de páginas? Menciona un resultado de investigación.
+Isabella: Dos. ¿Qué tres cosas premia o castiga BM25?
+Antonio: Tres. Da una consulta donde las palabras le ganan al significado, y una donde gana el significado.
+Isabella: Cuatro. ¿Cómo junta dos listas la fusión de rankings, y por qué usa posiciones en vez de puntajes?
+Antonio: Cinco. ¿Por qué sellar cada fragmento con el resumen y los alias de su nota?
+Isabella: Y seis. ¿Qué te dicen recall@5 y MRR, y cuándo los vuelves a correr?
+
+[11:30] Siguiente: Parte 5
+Antonio: Eso fue la Parte 4. Palabras clave para lo exacto, significado en tu propia computadora, rankings fusionados, fragmentos sellados y un examen que lo demuestra.
+Isabella: La próxima vez, Parte 5: conéctalo donde sea.
+Antonio: Mira la figura. Tres apps distintas se conectan al mismo cerebro, y reciben las mismas tres herramientas: search, read y remember.
+Isabella: El agente del editor busca un código de error, y la página regresa por el cable.
+Antonio: Un cerebro, cualquier herramienta que hable MCP. Nos vemos en la Parte 5.

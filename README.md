@@ -2,6 +2,12 @@
   <a href="https://www.youtube.com/playlist?list=PLaleqILsm2uQ"><img src="docs/assets/banner.svg" alt="The Memory Layer: build an AI second brain any LLM can recall from" width="100%"></a>
 </p>
 
+<div align="center">
+
+**English** · [Español](es/README.md)
+
+</div>
+
 <p align="center">
   <a href="#video-tutorials">videos</a> | <a href="#course">labs</a> | <a href="brain-tools/">brain-tools</a> | <a href="brain-vault/">reference vault</a> | <a href="course/">research</a>
 </p>
@@ -206,7 +212,7 @@ All six parts are out. Each one has a video, slides as a PDF, a hands-on lab wit
 
 ## video tutorials
 
-New here? Watch the [2-minute trailer](https://youtu.be/XpyePfCoe-g) first. Then watch the parts in order in the [YouTube playlist](https://www.youtube.com/playlist?list=PLaleqILsm2uQ), or jump to any part.
+New here? Watch the [2-minute trailer](https://youtu.be/XpyePfCoe-g) first. ¿Prefieres español? Mira [La capa de memoria](https://www.youtube.com/playlist?list=PLBx8rYlb7T2Y). Then watch the parts in order in the [YouTube playlist](https://www.youtube.com/playlist?list=PLaleqILsm2uQ), or jump to any part.
 
 <table>
 <tr>

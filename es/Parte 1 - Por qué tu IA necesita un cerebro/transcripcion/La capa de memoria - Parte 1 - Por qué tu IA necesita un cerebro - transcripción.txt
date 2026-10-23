@@ -1,0 +1,191 @@
+La capa de memoria - Parte 1 - Por qué tu IA necesita un cerebro — transcripción
+
+Capítulos:
+0:00 Bienvenida
+0:58 Lo que vas a aprender
+1:44 Tu IA no tiene memoria
+2:41 El modelo olvida. Los archivos, no.
+3:51 Cómo recuerda tu cerebro
+5:21 Tres hogares para la memoria
+6:52 El patrón LLM Wiki
+8:18 El conocimiento se acumula
+9:29 Recorrido: una fuente se reparte
+10:12 Cuatro capas de memoria
+11:23 El latido
+12:49 La escalera de recuperación
+13:46 Un cerebro, cualquier arnés
+14:31 La regla de oro
+14:54 Laboratorio: con y sin cerebro
+16:09 Pon a prueba lo aprendido
+17:01 Siguiente: Parte 2
+17:39 El cerebro que construiste
+
+[0:00] Bienvenida
+Antonio: Te damos la bienvenida a La capa de memoria. Es una serie para construir un segundo cerebro que tu IA pueda consultar. Soy Antonio.
+Isabella: Y yo soy Isabella. Esta es la Parte 1: por qué tu IA necesita un cerebro.
+Antonio: Aquí está toda la serie en una imagen. Un cerebro hecho de unas cuantas notas enlazadas.
+Isabella: Entra una pregunta: ¿qué decidimos? La IA lee primero el catálogo, abre dos páginas y responde con citas.
+Antonio: ¿Y esa línea del latido que corre por abajo? Hace pulsar el cerebro en cada latido. Representa el heartbeat, una tarea programada que mantiene sano el cerebro. Llegaremos a ella más adelante.
+Isabella: Algo importante desde el inicio. Nada aquí depende de un solo producto. El cerebro es solo una carpeta de archivos markdown, texto plano con formato sencillo. Cualquier herramienta de IA que lea archivos puede usarlo.
+
+[0:58] Lo que vas a aprender
+Isabella: Al terminar este video, vas a poder hacer cuatro cosas.
+Antonio: Explicar por qué un modelo olvida y dónde puede vivir la memoria.
+Isabella: Describir el patrón LLM Wiki: raw, wiki, índice, registro y el esquema.
+Antonio: Recorrer una bóveda: las capas de memoria, el latido y la escalera de recuperación. La bóveda es la carpeta de archivos markdown que forma el cerebro.
+Isabella: Y conectar cualquier IA a un cerebro, y recibir respuestas con citas.
+Antonio: La barra de capítulos muestra el camino. Las dos piezas más grandes son el patrón y el laboratorio. La idea es ver un cerebro funcionar, no solo admirarlo.
+
+[1:44] Tu IA no tiene memoria
+Antonio: Empecemos por el problema. Pregúntale a una herramienta de IA: "¿qué decidió nuestro equipo la semana pasada?"
+Isabella: Y no tiene forma de saberlo.
+Antonio: Exacto. Por tres razones. Primero, cada sesión empieza vacía. La ventana de contexto es la memoria de trabajo. Cierras el chat y desaparece.
+Isabella: Pero muchas herramientas ya tienen memoria integrada.
+Antonio: Sí, y es útil. Pero segundo, la memoria integrada no es tuya. Vive dentro de un solo producto. No puedes leerla, auditarla ni llevártela.
+Isabella: Y tercero, el conocimiento está disperso. Guías, transcripciones y decisiones viven en carpetas que nadie vuelve a leer… así que la IA tampoco.
+Antonio: Entonces la pregunta de hoy es esta. ¿Cómo le damos a cualquier IA una memoria propia y que podamos verificar?
+
+[2:41] El modelo olvida. Los archivos, no.
+Isabella: Veámoslo en acción. Sesión uno. La ventana de contexto se llena: el prompt de sistema, el chat, los documentos y las decisiones que tomaste.
+Antonio: Luego termina la sesión y la ventana se borra. Ese borrado no es una falla. Así funciona todo modelo.
+Isabella: Sesión dos. El mismo modelo, la misma pregunta: "¿qué decidimos?"
+Antonio: Y no tiene de dónde sacar la respuesta. Solo puede adivinar o decir que no sabe.
+Isabella: Ahora mira la caja de abajo: archivos en disco. Son unos cuantos archivos: core.md e index.md.
+Antonio: Al inicio de la sesión, el arnés los carga. El arnés es el software que rodea al modelo. Los datos base llegan a la ventana… y la respuesta vuelve, con su fuente.
+Isabella: Entonces, ¿una ventana de contexto más grande no resolvería todo esto?
+Antonio: No. Una ventana más grande también se vacía al terminar la sesión. Y llenarla cuesta tokens en cada turno. El modelo olvida. Los archivos, no.
+
+[3:51] Cómo recuerda tu cerebro
+Antonio: Ahora, un desvío corto por la biología. Tu propio cerebro ya resolvió este problema.
+Isabella: La neurociencia describe dos sistemas de aprendizaje que trabajan juntos. Se llaman sistemas de aprendizaje complementarios.
+Antonio: Paso uno, codificar. Las experiencias nuevas llegan primero al hipocampo. Aprende rápido, con una sola exposición… pero esas huellas también se borran rápido.
+Isabella: Paso dos, consolidar. Durante el sueño, el hipocampo repasa las experiencias recientes hacia la neocorteza.
+Antonio: La corteza aprende despacio, pero lo que aprende perdura y se enlaza con lo que ya sabe. Fíjate: el hipocampo naranja se apaga y la corteza dorada sigue encendida.
+Isabella: Paso tres, recordar. Una pista, como una pregunta, enciende unos cuantos nodos de la corteza. Una ola de activación recorre los enlaces, regresa por el hipocampo y sale el recuerdo.
+Antonio: Así que la información va en los dos sentidos. Ahora llévalo a la bóveda. El hipocampo es la memoria de trabajo.
+Isabella: El repaso durante el sueño es el latido programado.
+Antonio: La neocorteza son las páginas wiki.
+Isabella: Y el recuerdo por pista es una consulta con citas.
+Antonio: Una advertencia. Es una analogía para enseñar. No decimos que el software funcione como las neuronas.
+
+[5:21] Tres hogares para la memoria
+Isabella: Entonces, ¿dónde puede vivir de verdad la memoria de una IA? Hay tres hogares, y ninguno está mal.
+Antonio: Primero, la memoria integrada del producto. Cero configuración, y buena para preferencias personales. Pero vive dentro del producto de un proveedor, y solo ves en parte lo que guardó.
+Isabella: Segundo, una base de datos vectorial. El RAG clásico. Escala a millones de documentos.
+Antonio: Pero el índice es una copia de tus datos que las personas no pueden leer, y necesita un pipeline.
+Isabella: Tercero, el cerebro en markdown. Una carpeta de páginas enlazadas que las personas pueden leer, revisar y abrir en cualquier herramienta.
+Antonio: Su punto ideal es el conocimiento valioso de una persona o de un equipo. Más o menos de 100 a 10,000 documentos.
+Isabella: Y hay una novedad de mayo de 2026. Los equipos ya piden a los modelos que respondan en HTML, porque puede mostrar diagramas, tablas y pestañas.
+Antonio: Es cierto, pero el HTML cuesta de dos a tres veces más tokens. Y la recuperación de la IA funciona mejor con markdown. La regla es simple. Para lo que leen las personas, genera HTML. Para lo que la IA recuerda, usa markdown.
+Isabella: Y más adelante en la serie, agregamos búsqueda local encima de los archivos. Así tienes lo mejor de los dos mundos.
+
+[6:52] El patrón LLM Wiki
+Antonio: Este es el patrón sobre el que se construye toda la serie. Andrej Karpathy lo describió en abril de 2026. Hoy se le llama LLM Wiki, por modelo de lenguaje grande.
+Isabella: Arriba está el esquema: AGENTS.md. Es el manual de operación que le dice a cualquier IA cómo funciona esta bóveda.
+Antonio: Debajo, la carpeta raw. Guarda las fuentes tal como llegaron: guías, transcripciones, artículos recortados. La IA las lee, pero nunca las edita.
+Isabella: Así, cada afirmación se puede rastrear hasta su origen.
+Antonio: Luego viene la ingesta. La IA lee una fuente una vez y reparte lo que enseña en la carpeta wiki. Crea una página de la fuente y actualiza las páginas de conceptos, entidades y decisiones que toca, todas enlazadas.
+Isabella: Y dos archivos pequeños hacen mucho trabajo. index.md es el catálogo que la IA lee primero, una línea por página.
+Antonio: Y log.md es el registro de cada cambio. Léelo una vez. Archívalo en todos lados.
+Isabella: Entonces no se trata solo de resumir documentos.
+Antonio: No. Mantiene un conjunto de páginas enlazadas. Y actualizar una página existente es mejor que crear una nueva.
+
+[8:18] El conocimiento se acumula
+Isabella: El patrón funciona con tres operaciones. Cada una está escrita como una skill, así que cualquier herramienta la corre igual. Una skill es un paquete de instrucciones que el modelo carga solo cuando lo necesita.
+Antonio: Ingesta. Una fuente se reparte en tres a diez páginas, más el índice y el registro.
+Isabella: Consulta. La IA lee el índice, abre las dos o tres páginas que encajan y responde con citas.
+Antonio: Y mira el paso tres, guardar. Cuando una respuesta costó trabajo real, se guarda de vuelta como página. El contador sube de 53 a 54 páginas.
+Isabella: Así, la próxima vez, la misma pregunta es una sola lectura.
+Antonio: Exacto. Por eso el conocimiento se acumula.
+Isabella: Y el lint es la revisión automática de la bóveda. Enlaces rotos, páginas huérfanas, datos obsoletos y contradicciones, detectados y corregidos.
+Antonio: Las contradicciones se marcan, no se sobrescriben en silencio. Y como cada afirmación apunta a una página, verificar una respuesta es solo un clic.
+
+[9:29] Recorrido: una fuente se reparte
+Antonio: Veámoslo en una bóveda real. Cuatro pasos.
+Isabella: Paso uno: suelta una fuente. Pon un documento nuevo en la carpeta inbox y pídele a la IA: "incorpora esto".
+Antonio: Paso dos: mira cómo se reparte. Una página de fuente nueva, varias páginas de conceptos actualizadas, y cambios en el índice y en el registro.
+Isabella: Paso tres: pregunta entre fuentes. "¿Cómo se relacionan los tokens con la escalera de recuperación?" La respuesta cita páginas de dos sesiones distintas.
+Antonio: Y paso cuatro: revisa el cambio. Git diff muestra cada edición.
+Isabella: Nada queda escondido dentro de un modelo.
+
+[10:12] Cuatro capas de memoria
+Isabella: Ahora abramos la bóveda. Hay cuatro capas de memoria.
+Antonio: La central es un archivo pequeño, de menos de 300 palabras, que se carga en cada sesión. A quién sirve el cerebro, los proyectos activos y las reglas fijas.
+Isabella: La de trabajo es el borrador de esta sesión. Notas con hora.
+Antonio: Al terminar la sesión, la memoria de trabajo se archiva en un archivo de episodio con fecha. Esa es la memoria episódica. Lo que pasó.
+Isabella: Y la capa semántica es la wiki. Lo que es cierto. Revisado y con citas.
+Antonio: Mira la figura. El latido promueve una decisión de un episodio a una página de decisión, y una línea a la memoria central.
+Isabella: Así, lo que pasó se vuelve lo que es cierto.
+Antonio: Y solo las capas pequeñas de arriba cuestan tokens en cada sesión.
+Isabella: Pero, ¿no conviene guardar todo?
+Antonio: No. Capturar de más entierra lo importante. Registra decisiones, preferencias y observaciones. Y nunca guardes secretos ni datos personales de otras personas.
+
+[11:23] El latido
+Antonio: Entonces, ¿qué es el latido? Es una tarea que mantiene sano el cerebro, sin que nadie tenga que acordarse de correrla.
+Isabella: La versión en software del sueño.
+Antonio: Exacto. El anillo de marcas que gira alrededor del corazón es el horario. La marca dorada que brilla son las 6:15 a. m.
+Isabella: El corazón late cuatro veces, y cada latido corre un paso.
+Antonio: Latido uno, archivar. Las notas de trabajo de esta sesión pasan a un episodio con fecha. Así la memoria de trabajo empieza limpia.
+Isabella: Latido dos, reindexar. Se actualiza la búsqueda, y solo se procesan de nuevo los archivos que cambiaron.
+Antonio: Latido tres, lint. Los enlaces rotos, las páginas huérfanas y las obsoletas van a un reporte de salud.
+Isabella: Y latido cuatro, reflexión. Ese es opcional.
+Antonio: Una herramienta de IA lee el reporte y los episodios recientes. Promueve los hechos duraderos a la wiki y a la memoria central. Y deja para una persona todo lo que requiere criterio.
+Isabella: Entonces, ¿la IA reescribe mis notas durante la noche?
+Antonio: No. Nunca edita las fuentes crudas y nunca borra. Cada cambio queda en el registro y en git, para que lo revises. Lo construimos y lo programamos en la Parte 6.
+
+[12:49] La escalera de recuperación
+Isabella: Ahora, el hábito que hace que un cerebro salga barato. La escalera de recuperación.
+Antonio: Cada peldaño cuesta más tokens que el de arriba. Peldaño uno, la memoria central, ya está cargado.
+Isabella: Peldaño dos, el índice. Lee los resúmenes de una línea y abre de una a tres páginas. La primera pregunta de la figura se detiene justo aquí.
+Antonio: Casi todas lo hacen. Peldaño tres, búsqueda. Palabras clave y búsqueda semántica juntas, corriendo en local. La segunda pregunta la necesita, y se detiene ahí.
+Isabella: Peldaño cuatro, sigue los enlaces y los enlaces entrantes de las páginas que abriste.
+Antonio: Y peldaño cinco, las fuentes crudas. Solo para citar palabras o cifras exactas. Esa es la factura de tokens más alta.
+Isabella: Así que la regla es: deja de subir cuando tengas suficiente.
+
+[13:46] Un cerebro, cualquier arnés
+Antonio: Esta es la parte que más me gusta. Un cerebro, cualquier arnés.
+Isabella: El modelo se renta. El cerebro es tuyo.
+Antonio: Como el cerebro es markdown simple más un manual escrito, cualquier herramienta que lea archivos lo puede usar. Un agente de código, una app de chat de escritorio, un agente de línea de comandos o un modelo local.
+Isabella: Muchas herramientas leen AGENTS.md directamente. Otras lo importan con una línea desde su propio archivo de instrucciones.
+Antonio: Y mira el último paso. Cambia el modelo… y el modelo nuevo se conecta al mismo cerebro y lee las mismas reglas.
+Isabella: Cambia el modelo. El cerebro se queda.
+
+[14:31] La regla de oro
+Isabella: Si recuerdas una sola cosa de hoy, que sea esta.
+Antonio: La memoria vive en archivos, no en el modelo.
+Isabella: Lee primero el índice. Las fuentes crudas, al final.
+Antonio: Cada respuesta cita una página.
+Isabella: ¿Y por qué?
+Antonio: Si no puedes abrir la página de donde salió, no es memoria. Es una suposición.
+
+[14:54] Laboratorio: con y sin cerebro
+Antonio: Tu turno. Pausa aquí y abre el laboratorio. Las mismas tres preguntas, con y sin cerebro.
+Isabella: Las preguntas están en la carpeta del laboratorio. Una sobre el programa de capacitación, una sobre una decisión que tomamos y una que necesita dos fuentes.
+Antonio: Parte A, línea base. En cualquier herramienta de IA sin archivos adjuntos, haz las tres preguntas. Quizá responda la general, pero no puede conocer la decisión, y debería decirlo.
+Isabella: Parte B, con el cerebro. Abre la herramienta dentro de la carpeta brain vault, para que lea AGENTS.md. Haz las mismas tres preguntas y abre cada cita.
+Antonio: Parte C, aliméntalo. Pon la nota del laboratorio en la carpeta inbox, pide la ingesta y repite la pregunta tres. Luego lee la línea nueva en el registro.
+Isabella: Y Parte D, repaso del laboratorio. ¿Qué respuestas cambiaron? ¿Qué citas se sostuvieron? ¿Qué te ahorró el índice?
+Antonio: Un tropiezo común. Una herramienta que abres fuera de la carpeta de la bóveda nunca ve AGENTS.md.
+
+[16:09] Pon a prueba lo aprendido
+Isabella: Repaso rápido. Pausa después de cada pregunta. Responde en voz alta.
+Antonio: Uno. ¿Por qué una ventana de contexto más grande no le da memoria a un modelo?
+Isabella: Dos. Menciona una ventaja y un límite de una base de datos vectorial frente a un cerebro en markdown.
+Antonio: Tres. ¿Qué guarda cada uno: raw, wiki, el índice y el registro?
+Isabella: Cuatro. ¿Qué hace el latido durante la noche, y qué nunca va a tocar?
+Antonio: Cinco. Una pregunta se puede responder desde el índice. ¿Por qué no buscar en las fuentes crudas de todos modos?
+Isabella: Y seis. Cambias a otra herramienta de IA. ¿Qué tiene que cambiar en el cerebro?
+Antonio: Te adelanto la última. Nada. La herramienta nueva lee el mismo manual.
+
+[17:01] Siguiente: Parte 2
+Antonio: Eso fue la Parte 1. Por qué un modelo olvida y el patrón LLM Wiki que lo resuelve. Y una bóveda real que cualquier IA puede leer.
+Isabella: La próxima vez, la Parte 2 abre el archivo más importante de esa bóveda. AGENTS.md, el manual de operación.
+Antonio: Escribiremos uno para tu propio cerebro, agregaremos plantillas de página e instalaremos las skills de ingesta, consulta y lint. Así, todas las herramientas las corren igual.
+Isabella: Trae tu copia de la bóveda de referencia y tus notas del laboratorio.
+
+[17:39] El cerebro que construiste
+Isabella: Una última mirada. Este es el cerebro que construimos hoy.
+Antonio: La guía, diez transcripciones y tres informes de investigación, compilados en 55 páginas enlazadas. Mira cómo sube el contador mientras cada página se enciende y se enlaza con sus vecinas.
+Isabella: ¿Y los pulsos que recorren los enlaces? Es la recuperación en acción.
+Antonio: El modelo se renta, y olvida. El cerebro es tuyo. Perdura, y cualquier IA lo puede leer.
+Isabella: Gracias por ver. Nos vemos en la Parte 2.
