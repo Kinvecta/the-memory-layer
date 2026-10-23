@@ -212,7 +212,7 @@ Las seis partes ya están disponibles. Cada una tiene un video, diapositivas en 
 
 ## Videos
 
-Míralos en orden en la [lista de reproducción de YouTube](https://www.youtube.com/playlist?list=PLBx8rYlb7T2Y) o salta a cualquier parte.
+¿Primera vez aquí? Mira primero el [tráiler de 2 minutos](https://youtu.be/L_I6wvWsdJs). Después, mira las partes en orden en la [lista de reproducción de YouTube](https://www.youtube.com/playlist?list=PLBx8rYlb7T2Y) o salta a cualquier parte.
 
 <table>
 <tr>
